@@ -38,6 +38,7 @@ public class isaTab extends exportConnector {
         String sql = "SELECT bnhm_id " +
                 " FROM biocode " +
                 " LIMIT 10";
+        // some change
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
             try {
