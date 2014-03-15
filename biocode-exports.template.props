@@ -1,0 +1,5 @@
+# BCID settings
+biocodeUser = {user}
+biocodePassword = {pass}
+biocodeUrl = {jdbc url}
+biocodeClass = com.mysql.jdbc.Driver

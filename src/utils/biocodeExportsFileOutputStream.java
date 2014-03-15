@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * biocodeExportsFileOutputStream
+ * biocodeExportsFileOutputStream provides a convenient format for writing Strings directly to the
+ * fileOutputStream
  */
 public class biocodeExportsFileOutputStream extends FileOutputStream {
     public biocodeExportsFileOutputStream(File file) throws FileNotFoundException {

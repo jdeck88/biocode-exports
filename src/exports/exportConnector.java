@@ -4,9 +4,6 @@ import utils.PathManager;
 import utils.SettingsManager;
 import utils.biocodeExportsFileOutputStream;
 import utils.database;
-
-import javax.security.auth.Subject;
-import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +12,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 /**
- * Super-class for connecting to the Biocode Databzse
+ * Super-class for connecting to the Moorea Biocode Database
+ * This is meant to be extended by subClasses that have particular output formats.
  */
 public class exportConnector {
     protected Connection conn;
@@ -24,6 +22,12 @@ public class exportConnector {
     PathManager pm;
     String exportDir = "biocode-export";
 
+    /**
+     * The constructor for this class takes a "subPath" designating where the output files for
+     * the exports will live, e.g. "isaTab", "BOLD", "Merritt"
+     * @param subPath
+     * @throws Exception
+     */
     public exportConnector(String subPath) throws Exception {
         database db = new database();
         conn = db.getConn();
@@ -48,6 +52,15 @@ public class exportConnector {
                 subPath);
     }
 
+    /**
+     * Write a resultset to a file.  This function loops through all columns and tables and
+     * assigns column headings to the first row of the text file and uses tab-delimited text output format.
+     * @param rs
+     * @param file
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
     public String writeResultSet(ResultSet rs, File file) throws IOException, SQLException {
         biocodeExportsFileOutputStream befo = new biocodeExportsFileOutputStream(file);
 
@@ -76,6 +89,5 @@ public class exportConnector {
         befo.close();
 
         return file.getAbsoluteFile().toString();
-
     }
 }
