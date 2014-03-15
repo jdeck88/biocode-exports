@@ -17,8 +17,8 @@ import java.sql.Statement;
  */
 public class isaTab extends exportConnector {
 
-    String investigationName = "i_BiocodeProject.txt";
-    String studyName = "s_MooreaBiocode.txt";
+    String investigationName = "i_biocodeProject.txt";
+    String studyName = "s_mooreaBiocode.txt";
     String assayName = "a_sequencing.txt";
 
     static File investigationFile, studyFile, assayFile;
@@ -75,7 +75,7 @@ public class isaTab extends exportConnector {
                         // Remove this line when i'm done testing
                         "\t && (b.bnhm_id = 'MBIO56' || b.bnhm_id = 'MBIO2541')\n";
 
-        System.out.println(sql);
+        //System.out.println(sql);
         return writeResultSet(stmt.executeQuery(sql), studyFile);
     }
 
@@ -115,7 +115,7 @@ public class isaTab extends exportConnector {
                 "\tA.extraction_id = extraction.extractionId &&\n" +
                 "\tworkflow.id = assembly.workflow";
 
-        System.out.println(sql);
+        //System.out.println(sql);
         return writeResultSet(stmt.executeQuery(sql), assayFile);
     }
 
@@ -132,6 +132,7 @@ public class isaTab extends exportConnector {
         System.out.println(isaTab.createStudy());
         System.out.println(isaTab.createAssay());
         System.out.println(isaTab.createInvestigation());
+
 
         //File investigationFile = new File (outputPath + File.pathSeparatorChar + investigationName);
 
