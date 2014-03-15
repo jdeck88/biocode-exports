@@ -13,3 +13,5 @@ To run this codebase, do the following:
 1. svn checkout http://biocode-exports.googlecode.com/svn/trunk/ biocode-exports-read-only
 
 2. rename biocode-exports.template.props to biocode-exports.props (and change property values accordingly)
+
+3. Run the main methods in various classes in the exports package (e.g. exports/isaTab.java)
