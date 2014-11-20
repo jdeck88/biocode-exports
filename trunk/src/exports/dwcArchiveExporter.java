@@ -11,29 +11,27 @@ import java.sql.Statement;
 /**
  * Export Biocode Project to ISA Tab
  */
-public class isaTab extends connector {
+public class dwcArchiveExporter extends connector {
 
-    String investigationName = "i_biocodeProject.txt";
-    String studyName = "s_mooreaBiocode.txt";
-    String assayName = "a_sequencing.txt";
+    String metafileName = "meta.xml";
+    String sampleCoreName = "materialSample.txt";
 
-    static File investigationFile, studyFile, assayFile;
+    static File metaFile, sampleCoreFile, assayFile,investigationFile;
 
-    public isaTab() throws Exception {
-        super("isaTab");
+    public dwcArchiveExporter() throws Exception {
+        super("dwca");
 
         String tmpDirName = this.processDirectory.getAbsoluteFile().toString();
 
-        investigationFile = new File(tmpDirName + File.separatorChar + investigationName);
-        studyFile = new File(tmpDirName + File.separatorChar + studyName);
-        assayFile = new File(tmpDirName + File.separatorChar + assayName);
+        metaFile = new File(tmpDirName + File.separatorChar + metafileName);
+        sampleCoreFile = new File(tmpDirName + File.separatorChar + sampleCoreName);
 
     }
 
     /**
      * create our ISA Study
      *
-     * @throws SQLException
+     * @throws java.sql.SQLException
      */
     public String createStudy() throws SQLException, IOException {
         Statement stmt = conn.createStatement();
@@ -65,7 +63,7 @@ public class isaTab extends connector {
                         ",\n\tbiocode_tissue.container as 'Parameter Value[container]'" +
 
                         // Items pertaining to the sample (or tissue)
-                        ",\n\tconcat(biocode.bnhm_id,'.',biocode_tissue.tissue_num) as 'Sample Name'" +
+                        ",\n\tconcat(biocode.bnhm_id,'.',t.tissue_num) as 'Sample Name'" +
                         ",\n\tbiocode_tissue.tissuetype as 'Characteristics[tissuetype]'" +
                         ",\n\tbiocode_tissue.HoldingInstitution as 'Characteristics[TissueHoldingInstitution]'" +
 
@@ -176,15 +174,15 @@ public class isaTab extends connector {
 
 
         System.out.println(sql);
-        return writeResultSet(stmt.executeQuery(sql), studyFile);
+        return writeResultSet(stmt.executeQuery(sql), sampleCoreFile);
     }
 
     /**
      * Create our ISA assay (only 1 for nucleic acid sequencing)
      *
      * @return
-     * @throws SQLException
-     * @throws IOException
+     * @throws java.sql.SQLException
+     * @throws java.io.IOException
      */
     public String createAssay() throws SQLException, IOException {
         Statement stmt = conn.createStatement();
@@ -226,12 +224,12 @@ public class isaTab extends connector {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        isaTab isaTab = new isaTab();
+        dwcArchiveExporter isaTab = new dwcArchiveExporter();
 
         // createStudy and return path to output
         System.out.println(isaTab.createStudy());
-      //  System.out.println(isaTab.createAssay());
-      //  System.out.println(isaTab.createInvestigation());
+        System.out.println(isaTab.createAssay());
+        System.out.println(isaTab.createInvestigation());
 
 
         //File investigationFile = new File (outputPath + File.pathSeparatorChar + investigationName);
@@ -241,7 +239,7 @@ public class isaTab extends connector {
     /**
      * Hard-code the investigation output here
      * @return
-     * @throws IOException
+     * @throws java.io.IOException
      */
     public String createInvestigation() throws IOException {
         biocodeExportsFileOutputStream befo = new biocodeExportsFileOutputStream(investigationFile);

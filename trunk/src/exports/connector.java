@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * Super-class for connecting to the Moorea Biocode Database
  * This is meant to be extended by subClasses that have particular output formats.
  */
-public class exportConnector {
+public class connector {
     protected Connection conn;
     private SettingsManager sm;
     File processDirectory;
@@ -28,7 +28,7 @@ public class exportConnector {
      * @param subPath
      * @throws Exception
      */
-    public exportConnector(String subPath) throws Exception {
+    public connector(String subPath) throws Exception {
         database db = new database();
         conn = db.getConn();
 
