@@ -11,7 +11,7 @@ import java.sql.Statement;
 /**
  * Export Biocode Project to ISA Tab
  */
-public class isaTab extends connector {
+public class isaTabExporter extends connector {
 
     String investigationName = "i_biocodeProject.txt";
     String studyName = "s_mooreaBiocode.txt";
@@ -19,7 +19,7 @@ public class isaTab extends connector {
 
     static File investigationFile, studyFile, assayFile;
 
-    public isaTab() throws Exception {
+    public isaTabExporter() throws Exception {
         super("isaTab");
 
         String tmpDirName = this.processDirectory.getAbsoluteFile().toString();
@@ -226,7 +226,7 @@ public class isaTab extends connector {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        isaTab isaTab = new isaTab();
+        isaTabExporter isaTab = new isaTabExporter();
 
         // createStudy and return path to output
         System.out.println(isaTab.createStudy());

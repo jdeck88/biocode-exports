@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 /**
  * A Class to run specific bulk operations... mostly for a one-off basis
  */
-public class operations extends connector {
+public class miscellaneousOperations extends connector {
     /**
      * The constructor for this class takes a "subPath" designating where the output files for
      * the exports will live, e.g. "isaTab", "BOLD", "Merritt"
@@ -18,7 +17,7 @@ public class operations extends connector {
      *
      * @throws Exception
      */
-    public operations(String subPath) throws Exception {
+    public miscellaneousOperations(String subPath) throws Exception {
         super(subPath);
     }
 
@@ -161,7 +160,7 @@ public class operations extends connector {
 
     public static void main(String[] args) throws Exception {
 
-        operations o = new operations(null);
+        miscellaneousOperations o = new miscellaneousOperations(null);
 
         //o.deleteSIMammals();
         //o.deletePlate();
