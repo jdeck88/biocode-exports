@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="biocode-exports" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="lib/deploy.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javaws.jar"/>
+      <include name="lib/jce.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/management-agent.jar"/>
+      <include name="lib/plugin.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="../Classes/alt-rt.jar"/>
+      <include name="../Classes/alt-string.jar"/>
+      <include name="../Classes/charsets.jar"/>
+      <include name="../Classes/classes.jar"/>
+      <include name="../Classes/jsse.jar"/>
+      <include name="../Classes/ui.jar"/>
+      <include name="lib/ext/apple_provider.jar"/>
+      <include name="lib/ext/dnsns.jar"/>
+      <include name="lib/ext/localedata.jar"/>
+      <include name="lib/ext/sunjce_provider.jar"/>
+      <include name="lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.biocode-exports.classpath">
+    <pathelement location="${basedir}"/>
+  </path>
+  
+  <path id="library.lib.classpath">
+    <fileset dir="${basedir}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module biocode-exports -->
+  
+  <dirname property="module.biocode-exports.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.biocode-exports" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.biocode-exports" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.biocode-exports" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.biocode-exports" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="biocode-exports.output.dir" value="${module.biocode-exports.basedir}/out/production/biocode-exports"/>
+  <property name="biocode-exports.testoutput.dir" value="${module.biocode-exports.basedir}/out/test/biocode-exports"/>
+  
+  <path id="biocode-exports.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="biocode-exports.module.production.classpath">
+    <path refid="${module.jdk.classpath.biocode-exports}"/>
+    <path refid="library.biocode-exports.classpath"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="biocode-exports.runtime.production.module.classpath">
+    <pathelement location="${biocode-exports.output.dir}"/>
+    <path refid="library.biocode-exports.classpath"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="biocode-exports.module.classpath">
+    <path refid="${module.jdk.classpath.biocode-exports}"/>
+    <pathelement location="${biocode-exports.output.dir}"/>
+    <path refid="library.biocode-exports.classpath"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="biocode-exports.runtime.module.classpath">
+    <pathelement location="${biocode-exports.testoutput.dir}"/>
+    <pathelement location="${biocode-exports.output.dir}"/>
+    <path refid="library.biocode-exports.classpath"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.biocode-exports">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.biocode-exports">
+    <patternset refid="excluded.from.module.biocode-exports"/>
+  </patternset>
+  
+  <path id="biocode-exports.module.sourcepath">
+    <dirset dir="${module.biocode-exports.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.biocode-exports" depends="compile.module.biocode-exports.production,compile.module.biocode-exports.tests" description="Compile module biocode-exports"/>
+  
+  <target name="compile.module.biocode-exports.production" description="Compile module biocode-exports; production classes">
+    <mkdir dir="${biocode-exports.output.dir}"/>
+    <javac destdir="${biocode-exports.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.biocode-exports}/javac">
+      <compilerarg line="${compiler.args.biocode-exports}"/>
+      <bootclasspath refid="biocode-exports.module.bootclasspath"/>
+      <classpath refid="biocode-exports.module.production.classpath"/>
+      <src refid="biocode-exports.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.biocode-exports"/>
+    </javac>
+    
+    <copy todir="${biocode-exports.output.dir}">
+      <fileset dir="${module.biocode-exports.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.biocode-exports.tests" depends="compile.module.biocode-exports.production" description="compile module biocode-exports; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.biocode-exports" description="cleanup module">
+    <delete dir="${biocode-exports.output.dir}"/>
+    <delete dir="${biocode-exports.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.biocode-exports" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.biocode-exports" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
