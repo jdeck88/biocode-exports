@@ -226,10 +226,10 @@ public class exportAsDarwinCore extends connector {
                 "      <location>occurrence.txt</location>\n" +
                 "    </files>\n" +
                 "    <id index=\"0\" />\n" +
-                "    <field index=\"1\" term=\"http://purl.org/dc/terms/occurrenceID\"/>\n" +
-                "    <field index=\"2\" term=\"http://purl.org/dc/terms/basisOfRecord\"/>\n" +
-                "    <field index=\"3\" term=\"http://purl.org/dc/terms/institutionCode\"/>\n" +
-                "    <field index=\"4\" term=\"http://purl.org/dc/terms/recordNumber\"/>\n" +
+                "    <field index=\"1\" term=\"http://rs.tdwg.org/dwc/terms/occurrenceID\"/>\n" +
+                "    <field index=\"2\" term=\"http://rs.tdwg.org/dwc/terms/basisOfRecord\"/>\n" +
+                "    <field index=\"3\" term=\"http://rs.tdwg.org/dwc/terms/institutionCode\"/>\n" +
+                "    <field index=\"4\" term=\"http://rs.tdwg.org/dwc/terms/recordNumber\"/>\n" +
                 "    <field index=\"5\" term=\"http://rs.tdwg.org/dwc/terms/scientificName\"/>\n" +
                 "    <field index=\"6\" term=\"http://rs.tdwg.org/dwc/terms/kingdom\"/>\n" +
                 "    <field index=\"7\" term=\"http://rs.tdwg.org/dwc/terms/phylum\"/>\n" +
@@ -244,7 +244,7 @@ public class exportAsDarwinCore extends connector {
                 "    <field index=\"16\" term=\"http://rs.tdwg.org/dwc/terms/dateIdentified\"/>\n" +
                 "    <field index=\"17\" term=\"http://rs.tdwg.org/dwc/terms/typeStatus\"/>\n" +
                 "    <field index=\"18\" term=\"http://rs.tdwg.org/dwc/terms/sex\"/>\n" +
-                "    <field index=\"19\" term=\"http://rs.tdwg.org/dwc/terms/lefeStage\"/>\n" +
+                "    <field index=\"19\" term=\"http://rs.tdwg.org/dwc/terms/lifeStage\"/>\n" +
                 "    <field index=\"20\" term=\"http://rs.tdwg.org/dwc/terms/eventID\"/>\n" +
                 "    <field index=\"21\" term=\"http://rs.tdwg.org/dwc/terms/recordedBy\"/>\n" +
                 "    <field index=\"22\" term=\"http://rs.tdwg.org/dwc/terms/year\"/>\n" +
@@ -262,7 +262,7 @@ public class exportAsDarwinCore extends connector {
                 "    <field index=\"34\" term=\"http://rs.tdwg.org/dwc/terms/decimalLongitude\"/>\n" +
                 "    <field index=\"35\" term=\"http://rs.tdwg.org/dwc/terms/geodeticDatum\"/>\n" +
                 "    <field index=\"36\" term=\"http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters\"/>\n" +
-                "    <field index=\"37\" term=\"http://rs.tdwg.org/dwc/terms/minimElevationInMeters\"/>\n" +
+                "    <field index=\"37\" term=\"http://rs.tdwg.org/dwc/terms/minimumElevationInMeters\"/>\n" +
                 "    <field index=\"38\" term=\"http://rs.tdwg.org/dwc/terms/maximumElevationInMeters\"/>\n" +
                 "    <field index=\"39\" term=\"http://rs.tdwg.org/dwc/terms/minimumDepthInMeters\"/>\n" +
                 "    <field index=\"40\" term=\"http://rs.tdwg.org/dwc/terms/maximumDepthInMeters\"/>\n" +
@@ -286,7 +286,7 @@ public class exportAsDarwinCore extends connector {
                 "         xml:lang=\"eng\">\n" +
                 "\n" +
                 "<dataset>\n" +
-                "  <alternateIdentifier>5d283bb6-64dd-4626-8b3b-a4e8db5415c3</alternateIdentifier>\n" +
+                "  <alternateIdentifier>33204c15-8004-43d4-81f0-92ce25864554</alternateIdentifier>\n" +
                 "  <alternateIdentifier>http://bnhmipt.berkeley.edu/ipt/resource.do?r=biocode</alternateIdentifier>\n" +
                 "  <title xml:lang=\"eng\">Moorea Biocode Project</title>\n" +
                 "<creator>\n" +
@@ -352,10 +352,10 @@ public class exportAsDarwinCore extends connector {
                 "      <geographicCoverage>\n" +
                 "          <geographicDescription>Moorea, French Polynesia</geographicDescription>\n" +
                 "        <boundingCoordinates>\n" +
-                "          <westBoundingCoordinate>-50.12</westBoundingCoordinate>\n" +
-                "          <eastBoundingCoordinate>168.95</eastBoundingCoordinate>\n" +
-                "          <northBoundingCoordinate>58.19</northBoundingCoordinate>\n" +
-                "          <southBoundingCoordinate>-16.17</southBoundingCoordinate>\n" +
+                "          <westBoundingCoordinate>-161</westBoundingCoordinate>\n" +
+                "          <eastBoundingCoordinate>-132</eastBoundingCoordinate>\n" +
+                "          <northBoundingCoordinate>-3</northBoundingCoordinate>\n" +
+                "          <southBoundingCoordinate>-27</southBoundingCoordinate>\n" +
                 "        </boundingCoordinates>\n" +
                 "      </geographicCoverage>\n" +
                 "  </coverage>\n" +
