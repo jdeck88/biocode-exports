@@ -10,7 +10,7 @@ this code-base will act as the source for all export data.   Most of this work i
 
 To run this codebase, do the following:
 
-1. svn checkout http://biocode-exports.googlecode.com/svn/trunk/ biocode-exports-read-only
+1. checkout this repository
 
 2. rename biocode-exports.template.props to biocode-exports.props (and change property values accordingly)
 
