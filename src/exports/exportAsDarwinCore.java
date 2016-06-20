@@ -1,6 +1,8 @@
 package exports;
 
 
+import org.apache.commons.cli.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,10 +17,19 @@ public class exportAsDarwinCore extends connector {
     String tmpDirName;
 
 
-    public exportAsDarwinCore() throws Exception {
+    /*public exportAsDarwinCore() throws Exception {
+        super("names");
+        tmpDirName = this.processDirectory.getAbsoluteFile().toString();
+    }*/
+
+    public exportAsDarwinCore(String processDirectory) throws Exception {
         super("names");
 
-        tmpDirName = this.processDirectory.getAbsoluteFile().toString();
+        if (processDirectory == null) {
+            tmpDirName = this.processDirectory.getAbsoluteFile().toString();
+        } else {
+            tmpDirName = processDirectory;
+        }
     }
 
     /**
@@ -94,8 +105,54 @@ public class exportAsDarwinCore extends connector {
     }
 
     public static void main(String[] args) throws Exception {
-        exportAsDarwinCore d = new exportAsDarwinCore();
-        d.dumpProjectCode("MBIO");
-        //d.dumpProjectCode("INDO");
+
+        // Some classes to help us
+        CommandLineParser clp = new GnuParser();
+        HelpFormatter helpf = new HelpFormatter();
+        CommandLine cl;
+
+        // The input file
+        String projectCode = "";
+        String outputDirectory = null;
+
+
+        // Define our commandline options
+        Options options = new Options();
+        options.addOption("h", "help", false, "print this help message and exit");
+        options.addOption("o", "outputDirectory", true, "Output Directory");
+        options.addOption("p", "projectCode", true, "Project Code, e.g. MBIO");
+
+
+        // Create the commands parser and parse the command line arguments.
+        try {
+            cl = clp.parse(options, args);
+        } catch (UnrecognizedOptionException e) {
+            e.printStackTrace();
+            return;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // No options returns help message
+        if (cl.getOptions().length < 2) {
+            helpf.printHelp("exportAsDarwinCore ", options, true);
+            return;
+        }
+
+        if (cl.hasOption("h")) {
+            helpf.printHelp("exportAsDarwinCore ", options, true);
+            return;
+        }
+        if (cl.hasOption("o")) {
+            outputDirectory = cl.getOptionValue("o");
+        }
+        if (cl.hasOption("p")) {
+            projectCode = cl.getOptionValue("p");
+        }
+
+        exportAsDarwinCore d = new exportAsDarwinCore(outputDirectory);
+        d.dumpProjectCode(projectCode);
+
     }
 }
