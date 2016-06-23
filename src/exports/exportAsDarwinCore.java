@@ -2,6 +2,7 @@ package exports;
 
 
 import org.apache.commons.cli.*;
+import updates.universalUpdater;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -149,6 +150,13 @@ public class exportAsDarwinCore extends connector {
         if (cl.hasOption("p")) {
             projectCode = cl.getOptionValue("p");
         }
+
+        // Update GUIDS before dumping
+        universalUpdater updater = new universalUpdater(null);
+        updater.updateBiocodeGuid();
+        updater.updateBiocodeCollectingEventGuid();
+        updater.updateBiocodeTissueGuid();
+        updater.updateBiocodeTaxonGuid();
 
         // Dump Data
         exportAsDarwinCore d = new exportAsDarwinCore(outputDirectory);
