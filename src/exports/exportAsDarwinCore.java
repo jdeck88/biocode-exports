@@ -155,7 +155,7 @@ public class exportAsDarwinCore extends connector {
         d.dumpProjectCode(projectCode);
 
         // Dump EML
-        String emlFileString = outputDirectory + File.separatorChar + "eml.xml";
+        /*String emlFileString = outputDirectory + File.separatorChar + "eml.xml";
         PrintWriter eml = new PrintWriter(emlFileString);
         eml.println(getEml());
         eml.close();
@@ -165,18 +165,20 @@ public class exportAsDarwinCore extends connector {
         PrintWriter meta = new PrintWriter(metaFileString);
         meta.println(getMetaXML());
         meta.close();
+        */
 
         // Zip contents
-        ArrayList FileList = new ArrayList();
+        /*ArrayList FileList = new ArrayList();
         FileList.add(occurrenceDataFile);
         FileList.add(new File(emlFileString));
         FileList.add(new File(metaFileString));
+        */
 
         // Generate ZipFile
-        File zipFile = zip(FileList, outputDirectory + File.separatorChar + "dwca.zip");
+        //File zipFile = zip(FileList, outputDirectory + File.separatorChar + "dwca.zip");
 
         // Clean up
-        Iterator it = FileList.iterator();
+        /*Iterator it = FileList.iterator();
         while (it.hasNext()) {
             File f = (File) it.next();
             try {
@@ -186,6 +188,7 @@ public class exportAsDarwinCore extends connector {
             }
         }
         System.out.println("successfully generated zipFile = " + zipFile.getAbsolutePath());
+        */
 
     }
 
