@@ -48,7 +48,6 @@ public class exportAsDarwinCore extends connector {
         String sql =
                 "select \n" +
                         "  b.guid as occurrenceID,\n" +
-                        "  b.bnhm_id as catalogNumber,\n" +
                         "  'PreservedSpecimen' as basisOfRecord,\n" +
                         "  b.HoldingInstitution as institutionCode,\n" +
                         "  b.Specimen_Num_Collector as recordNumber,\n" +
@@ -95,7 +94,8 @@ public class exportAsDarwinCore extends connector {
                         "  e.Remarks as eventRemarks,\n" +
                         "  e.VerbatimLongitude as verbatimLongitude,\n" +
                         "  e.VerbatimLatitude as verbatimLatitude,\n" +
-                        "  e.Coll_EventID_collector as fieldNumber\n" +
+                        "  e.Coll_EventID_collector as fieldNumber,\n" +
+                        "  b.bnhm_id as catalogNumber\n" +
                         "FROM biocode b, biocode_collecting_event e\n" +
                         "where b.Coll_EventID = e.EventID\n" +
                         "AND b.projectCode = '" + projectCode + "';\n";
