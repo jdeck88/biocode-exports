@@ -16,6 +16,6 @@ public class biocodeExportsFileOutputStream extends FileOutputStream {
     }
 
     public void write(String input) throws IOException {
-        super.write(input.getBytes(Charset.forName("Latin1")));
+        super.write(input.getBytes(Charset.forName("utf-8")));
     }
 }
