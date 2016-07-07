@@ -51,7 +51,7 @@ public class exportAsDarwinCore extends connector {
                         "  'PreservedSpecimen' as basisOfRecord,\n" +
                         "  b.HoldingInstitution as institutionCode,\n" +
                         "  b.Specimen_Num_Collector as recordNumber,\n" +
-                        "  concat_ws(' ',b.genus,b.species) as scientificName,\n" +
+                        "  b.lowesttaxon_generated as scientificName,\n" +
                         "  b.Kingdom as kingdom,\n" +
                         "  b.Phylum as phylum,\n" +
                         "  b.Class as class,  \n" +
