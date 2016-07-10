@@ -106,7 +106,7 @@ public class sylvainUpdater {
                             "IdentifiedBy = ?," +
                             "basisOfID = ?," +
                             "morphospecies_description = ?," +
-                            "publicaccess = ?," +
+                            "publicaccess = null," +
                             "Subphylum = null," +
                             "Superclass = null," +
                             "Subclass = null," +
@@ -160,13 +160,11 @@ public class sylvainUpdater {
                     updateSpecimen.setString(8, cellValue);
                 } else if (approxEquals(columnNameString, "Taxonomy Notes")) {
                     updateSpecimen.setString(9, cellValue);
-                } else if (approxEquals(columnNameString, "specimen_available")) {
-                    updateSpecimen.setString(10, cellValue);
                 } else if (approxEquals(columnNameString, "biocode_id")) {
-                    updateSpecimen.setString(11, cellValue);
+                    updateSpecimen.setString(10, cellValue);
                     updateTissue.setString(3, cellValue);
                 } else if (approxEquals(columnNameString, "symbiocode_id")) {
-                    updateSpecimen.setString(12, cellValue);
+                    updateSpecimen.setString(11, cellValue);
                 } else if (approxEquals(columnNameString, "genbank_accession")) {
                     updateTissue.setString(1, cellValue);
                 } else if (approxEquals(columnNameString, "bold_url")) {
@@ -177,9 +175,12 @@ public class sylvainUpdater {
             }
 
             // Print out our statements
-            //System.out.println(updateSpecimen.toString());
+            System.out.println(updateSpecimen.toString());
+            System.out.println(updateTissue.toString());
+
+            if (1==1) return;
             updateSpecimen.execute();
-            //System.out.println(updateTissue.toString());
+
             updateTissue.execute();
             if (rowInt % 100 ==0 ) {
                 System.out.println("100 rows updated from "+ in.getName() + ": " + rowInt + " out of 5000");
