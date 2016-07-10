@@ -175,12 +175,10 @@ public class sylvainUpdater {
             }
 
             // Print out our statements
-            System.out.println(updateSpecimen.toString());
-            System.out.println(updateTissue.toString());
+            //System.out.println(updateSpecimen.toString());
+            //System.out.println(updateTissue.toString());
 
-            if (1==1) return;
             updateSpecimen.execute();
-
             updateTissue.execute();
             if (rowInt % 100 ==0 ) {
                 System.out.println("100 rows updated from "+ in.getName() + ": " + rowInt + " out of 5000");
