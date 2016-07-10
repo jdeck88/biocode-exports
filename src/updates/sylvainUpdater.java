@@ -119,7 +119,7 @@ public class sylvainUpdater {
                             "Tribe = null," +
                             "SubTribe = null," +
                             "Subgenus = null " +
-                            "WHERE biocode_id = ? " +
+                            "WHERE bnhm_id = ? " +
                             "and specimen_num_collector = ?";
             PreparedStatement updateSpecimen = d.getConn().prepareStatement(updateSpecimenString);
 
