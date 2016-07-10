@@ -182,8 +182,7 @@ public class sylvainUpdater {
             //System.out.println(updateTissue.toString());
             updateTissue.execute();
             if (rowInt % 100 ==0 ) {
-                System.out.println("100 rows updated from : "+ in.getName() + ": " + rowInt + " out of 5000");
-                return;
+                System.out.println("100 rows updated from "+ in.getName() + ": " + rowInt + " out of 5000");
             }
         }
 
