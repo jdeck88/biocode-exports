@@ -16,13 +16,18 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by jdeck on 6/23/16.
  */
 public class sylvainUpdater {
+
     public static void main(String[] args) throws Exception {
+        // Splitting data into three parts since the entire spreadsheet was too big for POI to read at once.
         runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part1.xlsx"), "Sheet1");
+        runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part2.xlsx"), "Sheet1");
+        //runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part3.xlsx"), "Sheet1");
     }
 
     public static void runUpdate(File in, String nameOfSheet) throws Exception {
@@ -75,6 +80,15 @@ public class sylvainUpdater {
                             "and specimen_num_collector = ?";
             PreparedStatement updateSpecimen = d.getConn().prepareStatement(updateSpecimenString);
 
+            String updateTissueString =
+                    "UPDATE biocode.biocode_tissue set " +
+                            "molecular_id = ?," +
+                            "otherCatalogNum = ? " +
+                            "WHERE bnhm_id = ? ";
+
+            PreparedStatement updateTissue = d.getConn().prepareStatement(updateTissueString);
+            ArrayList molecular_ids = new ArrayList();
+
             for (Cell columnName : columnHeaders) {
 
                 String columnNameString = columnName.getStringCellValue();
@@ -107,14 +121,28 @@ public class sylvainUpdater {
                     updateSpecimen.setString(10, cellValue);
                 } else if (approxEquals(columnNameString, "biocode_id")) {
                     updateSpecimen.setString(11, cellValue);
+                    updateTissue.setString(3, cellValue);
                 } else if (approxEquals(columnNameString, "symbiocode_id")) {
                     updateSpecimen.setString(12, cellValue);
+                } else if (approxEquals(columnNameString, "genbank_accession")) {
+                    updateTissue.setString(1, cellValue);
+                } else if (approxEquals(columnNameString, "bold_url")) {
+                    updateTissue.setString(2, cellValue);
                 }
 
                 columnInt++;
             }
-            System.out.println(updateSpecimen.toString());
-            return;
+
+            // Print out our statements
+            //System.out.println(updateSpecimen.toString());
+            updateSpecimen.execute();
+            //System.out.println(updateTissue.toString());
+            updateTissue.execute();
+            if (rowInt % 100 ==0 ) {
+                System.out.println("100 rows updated from : "+ in.getName() + ": " + rowInt + " out of 5000");
+                return;
+            }
+
         }
 
     }
