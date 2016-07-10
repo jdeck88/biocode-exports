@@ -1,5 +1,6 @@
 package updates;
 
+import org.apache.commons.cli.*;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -24,9 +25,51 @@ import java.util.Iterator;
 public class sylvainUpdater {
 
     public static void main(String[] args) throws Exception {
+
+               // Some classes to help us
+        CommandLineParser clp = new GnuParser();
+        HelpFormatter helpf = new HelpFormatter();
+        CommandLine cl;
+
+        // The input file
+        String inputFileName = null;
+
+
+        // Define our commandline options
+        Options options = new Options();
+        options.addOption("h", "help", false, "print this help message and exit");
+        options.addOption("i", "input", true, "Input FileName");
+
+
+        // Create the commands parser and parse the command line arguments.
+        try {
+            cl = clp.parse(options, args);
+        } catch (UnrecognizedOptionException e) {
+            e.printStackTrace();
+            return;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // No options returns help message
+        if (cl.getOptions().length < 1) {
+            helpf.printHelp("sylvainUpdater ", options, true);
+            return;
+        }
+
+        if (cl.hasOption("h")) {
+            helpf.printHelp("sylvainUpdater ", options, true);
+            return;
+        }
+        if (cl.hasOption("i")) {
+            inputFileName = cl.getOptionValue("i");
+        }
+
         // Splitting data into three parts since the entire spreadsheet was too big for POI to read at once.
-        runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part1.xlsx"), "Sheet1");
-        runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part2.xlsx"), "Sheet1");
+        runUpdate(new File(inputFileName), "Sheet1");
+        //runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part1.xlsx"), "Sheet1");
+        //runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part2.xlsx"), "Sheet1");
         //runUpdate(new File("/Users/jdeck/IdeaProjects/biocode-exports/biocode-exports/data/symbiocode_part3.xlsx"), "Sheet1");
     }
 
