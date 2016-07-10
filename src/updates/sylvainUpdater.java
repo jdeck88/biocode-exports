@@ -102,7 +102,7 @@ public class sylvainUpdater {
                             "Ordr = ?," +
                             "Family = ?," +
                             "Genus = ?," +
-                            "species = ?," +
+                            "specificEpithet = ?," +
                             "IdentifiedBy = ?," +
                             "basisOfID = ?," +
                             "morphospecies_description = ?," +
@@ -185,7 +185,6 @@ public class sylvainUpdater {
                 System.out.println("100 rows updated from : "+ in.getName() + ": " + rowInt + " out of 5000");
                 return;
             }
-
         }
 
     }
