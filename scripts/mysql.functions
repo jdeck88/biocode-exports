@@ -1,0 +1,23 @@
+# Special function for removing special characters and replacing with _
+DROP FUNCTION IF EXISTS character_sanitizer;
+DELIMITER | 
+CREATE FUNCTION character_sanitizer( str CHAR(255) ) RETURNS CHAR(255) DETERMINISTIC
+BEGIN 
+  DECLARE i, len SMALLINT DEFAULT 1; 
+  DECLARE ret CHAR(255) DEFAULT '';
+  DECLARE c CHAR(1); 
+  SET len = CHAR_LENGTH( str );
+  REPEAT 
+    BEGIN 
+      SET c = MID( str, i, 1 ); 
+      IF c REGEXP '[a-zA-Z0-9+=:._()~*]+' THEN
+        SET ret=CONCAT(ret,c);
+      ELSE 
+        SET ret=CONCAT(ret,'_');
+      END IF; 
+      SET i = i + 1; 
+    END; 
+  UNTIL i > len END REPEAT;
+  RETURN ret; 
+END | 
+DELIMITER ; 
