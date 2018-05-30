@@ -47,7 +47,7 @@ public class exportForGeome extends connector {
         Statement stmt = conn.createStatement();
         String sql =
                 "select \n" +
-                        "  e.Coll_EventID_collector as eventID,\n" +
+                        "  character_sanitizer(e.Coll_EventID_collector) as eventID,\n" +
                         "  e.Collector_List as recordedBy,\n" +
                         "  e.YearCollected as year,\n" +
                         "  e.MonthCollected as month,\n" +
@@ -89,7 +89,7 @@ public class exportForGeome extends connector {
         Statement stmt = conn.createStatement();
         String sql =
                 "select \n" +
-                       " concat(t.bnhm_id,'.',t.tissue_num) as tissueID,\n" +
+                       " concat(character_sanitizer(b.specimen_num_collector),'.',t.tissue_num) as tissueID,\n" +
                        " t.HoldingInstitution,\n" +
                        " t.OtherCatalogNum,\n" +
                        " t.DateFirstEntered,\n" +
@@ -122,7 +122,7 @@ public class exportForGeome extends connector {
         Statement stmt = conn.createStatement();
         String sql =
                 "select \n" +
-                        "  b.Specimen_Num_Collector as specimenID,\n" +
+                        "  character_sanitizer(b.Specimen_Num_Collector) as specimenID,\n" +
                         "  b.HoldingInstitution as institutionCode,\n" +
                         "  b.Specimen_Num_Collector as recordNumber,\n" +
                         "  b.lowesttaxon_generated as scientificName,\n" +
