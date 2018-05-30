@@ -96,7 +96,9 @@ public class exportAsDarwinCore extends connector {
                         "  e.VerbatimLatitude as verbatimLatitude,\n" +
                         "  e.Coll_EventID_collector as fieldNumber,\n" +
                         "  b.bnhm_id as catalogNumber,\n" +
-                        "  e.TaxTeam as collection_code\n" +
+                        "  e.TaxTeam as collection_code,\n" +
+                        "  b.subProject as sub_project,\n" +
+                        "  b.subSubProject as sub_sub_project\n" +
                         "FROM biocode b, biocode_collecting_event e\n" +
                         "where b.Coll_EventID = e.EventID\n" +
                         "AND b.projectCode = '" + projectCode + "';\n";
