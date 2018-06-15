@@ -62,6 +62,7 @@ public class connector {
      * @throws SQLException
      */
     public String writeResultSet(ResultSet rs, File file) throws IOException, SQLException {
+	System.out.println(" writing " + file.getAbsoluteFile().toString());
         biocodeExportsFileOutputStream befo = new biocodeExportsFileOutputStream(file);
 
         // Use column names as the header
