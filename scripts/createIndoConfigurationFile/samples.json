@@ -6,15 +6,17 @@
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "lengthUnits", "listName": "lengthUnits" }, 
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "weightUnits", "listName": "weightUnits" },
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "taxonRank", "listName": "taxonRank" }, 
-			{"name": "ControlledVocabulary", "level": "ERROR", "column": "basisOfIdentification", "listName": "basisOfIdentification" }, 
-			{"name": "ControlledVocabulary", "level": "ERROR", "column": "sexCaste", "listName": "sexCaste" }, 
+			{"name": "ControlledVocabulary", "level": "ERROR", "column": "identificationRemarks", "listName": "basisOfIdentification" }, 
+			{"name": "ControlledVocabulary", "level": "ERROR", "column": "sexCaste", "listName": "sex" }, 
 			{"name": "ControlledVocabulary", "level": "WARNING", "column": "lifeStage", "listName": "lifeStage" }, 
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "phylum", "listName": "phylum" }, 
 			{"name": "ControlledVocabulary", "level": "WARNING", "column": "institutionCode", "listName": "institutionCode" }, 
 			{"name": "ControlledVocabulary", "level": "WARNING", "column": "preparationType", "listName": "preparationType" },
-			{"name": "validYearMonthDay", "level": "ERROR", "columns": "yearIdentified,monthIdentified,dayIdentified"}
+                        {"name": "NumericRange", "level": "ERROR", "column": "yearIdentified", "range":">=1500|<=2050"},
+                        {"name": "NumericRange", "level": "ERROR", "column": "monthIdentified", "range":">=1|<=12"},
+                        {"name": "NumericRange", "level": "ERROR", "column": "dayIdentified", "range":">=1|<=31"}
 		],
-		"uniqueKey": "materialSampleID",
+		"uniqueKey": "specimenID",
 		"worksheet": "Samples",
 		"attributes": [
 

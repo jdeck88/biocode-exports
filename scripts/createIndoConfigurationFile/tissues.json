@@ -3,16 +3,18 @@
 			{"name": "UniqueValue", "level": "ERROR", "column": "tissueID" }, 
 			{"name": "ValidForURI", "level": "ERROR", "column": "tissueID" },
 			{"name": "RequiredValue", "level": "ERROR", "columns": ["tissueID"] },
-                        {"name": "uniqueValue", "level": "ERROR", "columns": "tissuePlate,wellNumber" },
-                        {"name": "checkTissueColumns", "level": "WARNING", "plateName": "tissuePlate","wellNumber":"tissueWell" },
+                        {"name": "RequireValueIfOtherColumn", "level": "WARNING", "column": "tissueWell", "otherColumn": "tissuePlate" },
                         {"name": "ControlledVocabulary", "level": "WARNING", "column": "tissuePreservative", "listName": "preservative" },
                         {"name": "ControlledVocabulary", "level": "WARNING", "column": "tissueContainer", "listName": "container" },
-                        {"name": "validYearMonthDay", "level": "ERROR", "columns": "tissueSamplingYear,tissueSamplingMonth,tissueSamplingDay"}
+                        {"name": "NumericRange", "level": "ERROR", "column": "tissueSamplingYear", "range":">=1500|<=2050"},
+                        {"name": "NumericRange", "level": "ERROR", "column": "tissueSamplingMonth", "range":">=1|<=12"},
+                        {"name": "NumericRange", "level": "ERROR", "column": "tissueSamplingDay", "range":">=1|<=31"}
 		],
 		"uniqueKey": "tissueID",
 		"worksheet": "Tissues",
 		"attributes": [
 {"uri":"urn:tissueID", "column":"tissueID","dataType":"STRING","definedBy":"urn:tissueID","definition":""},
+{"uri":"urn:materialSampleID", "column":"specimenID","dataType":"STRING","definedBy":"http://rs.tdwg.org/dwc/terms/MaterialSampleID","definition":"The collector's specimen number. This number must be unique among the specimen IDs within the expedition."},
 {"uri":"urn:geneticTissueType", "column":"tissueType","dataType":"STRING","definedBy":"urn:geneticTissueType","definition":"A list (concatenated and separated) of the tissue types sampled from this individual, together with any tissue identifiers that were assigned to them"},
 {"uri":"urn:plateID", "column":"tissuePlate","dataType":"STRING","definedBy":"urn:plateID","definition":"The name of the plate.  Typically this is a 96 well plat for Biocode projects"},
 {"uri":"urn:wellID", "column":"tissueWell","dataType":"STRING","definedBy":"urn:wellID","definition":"The well location in the plate"},
