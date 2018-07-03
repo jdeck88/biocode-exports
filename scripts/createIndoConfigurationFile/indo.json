@@ -188,14 +188,6 @@
                     "uri": "urn:voucherCatalogNumber"
                 }, 
                 {
-                    "column": "", 
-                    "dataType": "STRING", 
-                    "definedBy": "http://rs.tdwg.org/dwc/terms/associatedSequences", 
-                    "definition": "", 
-                    "group": "Record and Owner Details", 
-                    "uri": "urn:associatedSequences"
-                }, 
-                {
                     "column": "associatedTaxa", 
                     "dataType": "STRING", 
                     "definedBy": "http://rs.tdwg.org/dwc/terms/associatedTaxa", 

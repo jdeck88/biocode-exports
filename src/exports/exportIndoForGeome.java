@@ -32,269 +32,307 @@ import java.util.Map;
  * (select coll_eventid from biocode where projectCode = 'INDO') and projectCode = 'INDO';
  */
 public class exportIndoForGeome extends connector {
-    static final int BUFFER = 2048;
+	static final int BUFFER = 2048;
 
-    static File occurrenceDataFile;
-    String tmpDirName;
+	static File occurrenceDataFile;
+	String tmpDirName;
 
 
-    /*public exportAsDarwinCore() throws Exception {
-        super("names");
-        tmpDirName = this.processDirectory.getAbsoluteFile().toString();
-    }*/
+	/*public exportAsDarwinCore() throws Exception {
+	  super("names");
+	  tmpDirName = this.processDirectory.getAbsoluteFile().toString();
+	  }*/
 
-    public exportIndoForGeome (String processDirectory) throws Exception {
-        super("names");
+	public exportIndoForGeome (String processDirectory) throws Exception {
+		super("names");
 
-        if (processDirectory == null) {
-            tmpDirName = this.processDirectory.getAbsoluteFile().toString();
-        } else {
-            tmpDirName = processDirectory;
-        }
-    }
-
-    /**
-     * Dump Names
-     *
-     * @throws java.sql.SQLException
-     */
-    public String dumpCollectingEvents(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
-        Statement stmt = conn.createStatement();
-        String sql =
-                "select \n" +
-                        "  character_sanitizer(e.Coll_EventID_collector) as eventID,\n" +
-                        "  e.Collector_List as recordedBy,\n" +
-                        "  e.YearCollected as year,\n" +
-                        "  e.MonthCollected as month,\n" +
-                        "  e.DayCollected as day,\n" +
-                        "  e.TimeofDay as eventTime, \n" +
-                        "  e.ContinentOcean as continent,\n" +
-                        "  e.IslandGroup as islandGroup,\n" +
-                        "  e.Island as island,\n" +
-                        "  e.Country as country,\n" +
-                        "  e.StateProvince as stateProvince,\n" +
-                        "  e.County as county,\n" +
-                        "  e.Locality as locality,\n" +
-                        "  e.DecimalLongitude as decimalLatitude,\n" +
-                        "  e.DecimalLatitude as decimalLongitude,  \n" +
-                        "  e.HorizontalDatum as geodeticDatum,\n" +
-                        "  cast(e.MaxErrorInMeters as unsigned integer) as coordinateUncertaintyInMeters,\n" +
-                        "  cast(e.MinElevationMeters as unsigned integer) as minimumElevationInMeters,\n" +
-                        "  cast(e.MaxElevationMeters as unsigned integer) as maximumElevationInMeters,\n" +
-                        "  cast(e.MinDepthMeters as unsigned integer) as minimumDepthInMeters,\n" +
-                        "  cast(e.MaxDepthMeters as unsigned integer) as maximumDepthInMeters,  \n" +
-                        "  cast(e.IndividualCount as unsigned integer) as individualCount,\n" +
-                        "  e.Habitat as habitat,\n" +
-                        "  e.Collection_Method as samplingProtocol,\n" +
-                        "  e.Remarks as eventRemarks,\n" +
-                        "  e.VerbatimLongitude as verbatimLongitude,\n" +
-                        "  e.VerbatimLatitude as verbatimLatitude,\n" +
-                        "  e.Coll_EventID_collector as fieldNumber,\n" +
-                        "  e.TaxTeam as collection_code,\n" +
-                        "  e.guid as guid\n" +
-                        "FROM  biocode b, biocode_collecting_event e\n" +
-                        "where b.Coll_EventID = e.EventID\n" +
-                        "AND e.projectCode = '" + projectCode + "'\n";
-	sql += queryPrefixList(prefixList);
-	sql += " group by eventID";
-        occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Collecting_Events.txt");
-        return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
-    }
-    
-    /*
-    A function that gets called a few times here to assemble the prefixList query
-    this is a very INDO-specific function 
-    */
-    public String queryPrefixList(String prefixList) {
-	String sql = "";	
-	sql += "AND (";
-
-	String[] prefixListArray = prefixList.split(",");
-	for (String prefix : prefixListArray) {
-	   sql += "b.specimen_num_collector like '" + prefix+ "%' OR ";
+		if (processDirectory == null) {
+			tmpDirName = this.processDirectory.getAbsoluteFile().toString();
+		} else {
+			tmpDirName = processDirectory;
+		}
 	}
-	// Remove the last OR from the string (including two spaces)
-	sql = sql.substring(0,sql.length() - 4);
-	sql += ")";
-	return sql;
-    }
 
-    public String dumpTissues(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
-        Statement stmt = conn.createStatement();
-        String sql =
-                "select \n" +
-                       " concat(character_sanitizer(b.specimen_num_collector),'.',t.tissue_num) as tissueID,\n" +
-                       " t.HoldingInstitution,\n" +
-                       " t.OtherCatalogNum,\n" +
-                       " t.DateFirstEntered,\n" +
-                       " t.DateLastModified,\n" +
-                       " t.year,\n" +
-                       " t.month,\n" +
-                       " t.day,\n" +
-                       " t.person_subsampling,\n" +
-                       " t.container,\n" +
-                       " t.preservative,\n" +
-                       " t.tissuetype,\n" +
-                       " t.format_name96,\n" +
-                       " t.well_number96,\n" +
-                       " t.molecular_id,\n" +
-                       " t.notes,\n" +
-                       " t.from_tissue,\n" +
-                       " t.tissue_barcode,\n" +
-                       " t.tissue_remaining,\n" +
-                       " t.guid\n" +
-                        "FROM biocode b, biocode_collecting_event e, biocode_tissue t\n" +
-                        "where b.Coll_EventID = e.EventID\n" +
-                        "AND b.bnhm_id=t.bnhm_id\n" + 
-                        "AND b.projectCode = '" + projectCode + "'\n";
-	sql += queryPrefixList(prefixList);
+	/**
+	 * Dump Names
+	 *
+	 * @throws java.sql.SQLException
+	 */
+	public String dumpCollectingEvents(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
+		Statement stmt = conn.createStatement();
+		String sql =
+			"select \n" +
+			"  character_sanitizer(e.Coll_EventID_collector) as eventID,\n" +
+			"  e.Collection_Method as collectionMethod,\n" +
+			"  e.Collector_List as collectorList,\n" +
+			"  e.ContinentOcean as continentOcean,\n" +
+			"  e.Country as country,\n" +
+			"  e.County as county,\n" +
+			"  e.DecimalLatitude as decimalLatitude,\n" +
+			"  e.DecimalLongitude as decimalLongitude,\n" +
+			"  e.DepthOfBottomMeters as depthOfBottomInMeters,\n" +
+			"  e.EnteredBy as enteredBy,\n" +
+			"  e.Habitat as habitat,\n" +
+			"  cast(e.HorizontalDatum as unsigned integer) as horizontalDatum,\n" +
+			"  e.Island as island,\n" +
+			"  e.IslandGroup as islandGroup,\n" +
+			"  e.Landowner as landowner,\n" +
+			"  e.Locality as locality,\n" +
+			"  cast(e.MaxDepthMeters as unsigned integer) as maximumDepthInMeters,\n" +
+			"  cast(e.MaxElevationMeters as unsigned integer) as maximumElevationInMeters,\n" +
+			"  cast(e.MaxErrorInMeters as unsigned integer) as coordinateUncertaintyInMeters,\n" +
+			"  cast(e.MinDepthMeters as unsigned integer) as minimumDepthInMeters,\n" +
+			"  cast(e.MinElevationMeters as unsigned integer) as minimumElevationInMeters,\n" +
+			"  e.MicroHabitat as microHabitat,\n" +
+			"  e.Permit_Info as permitInformation,\n" +
+			"  e.Remarks as eventRemarks,\n" +
+			"  e.StateProvince as stateProvince,\n" +
+			"  e.TaxTeam as taxTeam,\n" +
+			"  e.TimeofDay as timeOfDay,\n" +
+			"  e.VerbatimLatitude as verbatimLatitude,\n" +
+			"  e.VerbatimLongitude as verbatimLongitude,\n" +
+			"  e.YearCollected as yearCollected,\n" +
+			"  e.MonthCollected as monthCollected,\n" +
+			"  e.DayCollected as dayCollected\n" +
+			"FROM  biocode b, biocode_collecting_event e\n" +
+			"where b.Coll_EventID = e.EventID\n" +
+			"AND e.projectCode = '" + projectCode + "'\n";
+		sql += queryPrefixList(prefixList);
+		sql += " group by eventID";
+		occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Collecting_Events.txt");
+		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
+	}
 
-        occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Tissues.txt");
-        return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
-    }
+	/*
+	   A function that gets called a few times here to assemble the prefixList query
+	   this is a very INDO-specific function 
+	   */
+	public String queryPrefixList(String prefixList) {
+		String sql = "";	
+		sql += "AND (";
 
-    public String dumpSpecimens(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
-        Statement stmt = conn.createStatement();
-        String sql =
-                "select \n" +
-                        "  character_sanitizer(b.Specimen_Num_Collector) as specimenID,\n" +
-                        "  b.HoldingInstitution as institutionCode,\n" +
-                        "  b.Specimen_Num_Collector as recordNumber,\n" +
-                        "  b.lowesttaxon_generated as scientificName,\n" +
-                        "  b.Kingdom as kingdom,\n" +
-                        "  b.Phylum as phylum,\n" +
-                        "  b.Class as class,  \n" +
-                        "  b.Ordr as 'order',\n" +
-                        "  b.Family as family,\n" +
-                        "  b.Genus as genus,\n" +
-                        "  b.Subgenus as subgenus,\n" +
-                        "  b.SpecificEpithet as specificEpithet,\n" +
-                        "  b.SubspecificEpithet as infraspecificEpithet,\n" +
-                        "  b.IdentifiedBy as identifiedBy,\n" +
-                        "  b.BasisOfID as identificationRemarks,\n" +
-                        "  concat(b.YearIdentified,\"-\",b.MonthIdentified, \"-\",b.DayIdentified) as dateIdentified,\n" +
-                        "  b.TypeStatus as typeStatus,\n" +
-                        "  b.SexCaste as sex,\n" +
-                        "  b.LifeStage as lifeStage,\n" +
-                        "  b.bnhm_id as catalogNumber,\n" +
-                        "  b.guid as guid\n" +
-                        "FROM biocode b, biocode_collecting_event e \n" +
-                        "where b.Coll_EventID = e.EventID \n" +
-                        "AND b.projectCode = '" + projectCode + "'\n";
-	sql += queryPrefixList(prefixList);
+		String[] prefixListArray = prefixList.split(",");
+		for (String prefix : prefixListArray) {
+			sql += "b.specimen_num_collector like '" + prefix+ "%' OR ";
+		}
+		// Remove the last OR from the string (including two spaces)
+		sql = sql.substring(0,sql.length() - 4);
+		sql += ")";
+		return sql;
+	}
 
-        occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Specimens.txt");
-        return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
-    }
+	public String dumpTissues(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
+		Statement stmt = conn.createStatement();
+		String sql =
+			"select \n" +
+			" character_sanitizer(concat(b.Specimen_Num_Collector,'.',tissue_num)) as tissueID,\n" +
+			" character_sanitizer(b.Specimen_Num_Collector) as specimenID,\n" +
+			" t.tissuetype as tissueType,\n" +
+			" t.format_name96 as tissuePlate,\n" +
+			" t.well_number96 as tissueWell,\n" +
+			" t.guid as tissueCatalogNumber,\n" +
+			" t.tissue_barcode as tissueBarcode,\n" +
+			" t.HoldingInstitution as tissueInstitution,\n" +
+			" t.OtherCatalogNum as tissueOtherCatalogNumbers,\n" +
+			" t.year as tissueSamplingYear,\n" +
+			" t.month as tissueSamplingMonth,\n" +
+			" t.day as tissueSamplingDay,\n" +
+			" t.person_subsampling as tissueRecordedBy,\n" +
+			" t.container as tissueContainer,\n" +
+			" t.preservative as tissuePreservative,\n" +
+			" t.molecular_id as associatedSequences,\n" +
+			" t.notes as tissueRemarks,\n" +
+			" t.from_tissue as fromTissue\n" +
+			"FROM biocode b, biocode_collecting_event e, biocode_tissue t\n" +
+			"where b.Coll_EventID = e.EventID\n" +
+			"AND b.bnhm_id=t.bnhm_id\n" + 
+			"AND b.projectCode = '" + projectCode + "'\n";
+		sql += queryPrefixList(prefixList);
 
-    public static void main(String[] args) throws Exception {
-        // Some classes to help us
-        CommandLineParser clp = new GnuParser();
-        HelpFormatter helpf = new HelpFormatter();
-        CommandLine cl;
+		occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Tissues.txt");
+		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
+	}
 
-        // The input file
-        String projectCode = "";
-        String outputDirectory = null;
+	public String dumpSpecimens(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
+		Statement stmt = conn.createStatement();
+		String sql =
+			"select \n" +
+			" character_sanitizer(b.Specimen_Num_Collector) as specimenID,\n" +
+			" character_sanitizer(e.Coll_EventID_collector) as eventID,\n" +
+			" b.Length as length,\n" +
+			" b.LengthUnits as lengthUnits,\n" +
+			" b.Weight as weight,\n" +
+			" b.WeightUnits as weightUnits,\n" +
+			" b.fixative as fixative,\n" +
+			" b.HoldingInstitution as institutionCode,\n" +
+			" b.IndividualCount as individualCount,\n" +
+			" b.PreparationType as preparationType,\n" +
+			" b.preservative as preservative,\n" +
+			" b.relaxant as relaxant,\n" +
+			" b.TypeStatus as typeStatus,\n" +
+			" b.EnteredBy as enteredBy,\n" +
+			" b.guid as catalogNumber,\n" +
+			" b.ModifiedBy as modifiedBy,\n" +
+			" b.ModifyReason as modifiedReason,\n" +
+			" b.Notes as occurrenceRemarks,\n" +
+			" b.RelatedCatalogItem as otherCatalogNumbers,\n" +
+			" b.SubProject as subProject,\n" +
+			" b.SubSubProject as subSubProject,\n" +
+			" b.Voucher_URI as voucherURI,\n" +
+			" b.VoucherCatalogNumber as voucherCatalogNumber,\n" +
+			" b.Associated_Taxon as associatedTaxa,\n" +
+			" b.association_type as organismRemarks,\n" +
+			" b.BasisOfID as identificationRemarks,\n" +
+			" b.Class as class,\n" +
+			" b.ColloquialName as colloquialName,\n" +
+			" b.Family as family,\n" +
+			" b.Genus as genus,\n" +
+			" b.IdentifiedBy as identifiedBy,\n" +
+			" b.Infraclass as infraClass,\n" +
+			" b.Infraorder as infraOrder,\n" +
+			" b.Kingdom as kingdom,\n" +
+			" b.LifeStage as lifeStage,\n" +
+			" b.LowestTaxonLevel as taxonRank,\n" +
+			" b.MorphoSpecies_Description as morphospeciesDescription,\n" +
+			" b.MorphoSpecies_Match as morphospeciesMatch,\n" +
+			" b.Ordr as `order`,\n" +
+			" b.Phylum as phylum,\n" +
+			" b.PreviousID as previousIdentifications,\n" +
+			" b.ScientificName as scientificName,\n" +
+			" b.SexCaste as sexCaste,\n" +
+			" b.SpecificEpithet as specificEpithet,\n" +
+			" b.Subclass as subClass,\n" +
+			" b.Subfamily as subFamily,\n" +
+			" b.Subgenus as subGenus,\n" +
+			" b.Suborder as subOrder,\n" +
+			" b.Subphylum as subPhylum,\n" +
+			" b.SubspecificEpithet as infraspecificEpithet,\n" +
+			" b.Subtribe as subTribe,\n" +
+			" b.Superclass as superClass,\n" +
+			" b.Superfamily as superFamily,\n" +
+			" b.Superorder as superOrder,\n" +
+			" b.Taxon_Certainty as taxonCertainty,\n" +
+			" b.Tribe as tribe,\n" +
+			" b.YearIdentified as yearIdentified,\n" +
+			" b.MonthIdentified as monthIdentified,\n" +
+			" b.DayIdentified as dayIdentified\n" +
+			"FROM biocode b, biocode_collecting_event e \n" +
+			"where b.Coll_EventID = e.EventID \n" +
+			"AND b.projectCode = '" + projectCode + "'\n";
+		sql += queryPrefixList(prefixList);
 
-        // Define our commandline options
-        Options options = new Options();
-        options.addOption("h", "help", false, "print this help message and exit");
-        options.addOption("o", "outputDirectory", true, "Output Directory");
-        options.addOption("p", "projectCode", true, "Project Code, e.g. MBIO");
+		occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Specimens.txt");
+		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
+	}
 
-        // Create the commands parser and parse the command line arguments.
-        try {
-            cl = clp.parse(options, args);
-        } catch (UnrecognizedOptionException e) {
-            e.printStackTrace();
-            return;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return;
-        }
+	public static void main(String[] args) throws Exception {
+		// Some classes to help us
+		CommandLineParser clp = new GnuParser();
+		HelpFormatter helpf = new HelpFormatter();
+		CommandLine cl;
 
-        // No options returns help message
-        if (cl.getOptions().length < 2) {
-            helpf.printHelp("exportForGeome ", options, true);
-            return;
-        }
+		// The input file
+		String projectCode = "";
+		String outputDirectory = null;
 
-        if (cl.hasOption("h")) {
-            helpf.printHelp("exportForGeome ", options, true);
-            return;
-        }
-        if (cl.hasOption("o")) {
-            outputDirectory = cl.getOptionValue("o");
-        }
-        if (cl.hasOption("p")) {
-            projectCode = cl.getOptionValue("p");
-        }
+		// Define our commandline options
+		Options options = new Options();
+		options.addOption("h", "help", false, "print this help message and exit");
+		options.addOption("o", "outputDirectory", true, "Output Directory");
+		options.addOption("p", "projectCode", true, "Project Code, e.g. MBIO");
 
-        // Dump Data
-        exportIndoForGeome d = new exportIndoForGeome(outputDirectory);
+		// Create the commands parser and parse the command line arguments.
+		try {
+			cl = clp.parse(options, args);
+		} catch (UnrecognizedOptionException e) {
+			e.printStackTrace();
+			return;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		// No options returns help message
+		if (cl.getOptions().length < 2) {
+			helpf.printHelp("exportForGeome ", options, true);
+			return;
+		}
+
+		if (cl.hasOption("h")) {
+			helpf.printHelp("exportForGeome ", options, true);
+			return;
+		}
+		if (cl.hasOption("o")) {
+			outputDirectory = cl.getOptionValue("o");
+		}
+		if (cl.hasOption("p")) {
+			projectCode = cl.getOptionValue("p");
+		}
+
+		// Dump Data
+		exportIndoForGeome d = new exportIndoForGeome(outputDirectory);
 
 
-	// For INDO dump, we want to map prefixes to funding sources... we use
-	// here a delimited string as the key value in a map and point to a single
-	// expedition value
-	Map<String, String> map = new HashMap<String,String>();
-	map.put("ACEH\\_","ACEH");
-	map.put("AUS,FLA,FL_PF,INV-CRU,NMV,QMW,SBD,ULLZ,USNM,ZRC","AMANDA");
-	map.put("BALI,CPM,IBRC,LISM,SERIBU,SRB,WPSM","BALI");
-	map.put("SS","NOAA");
-	map.put("ACEHPEER\\_,PEER,PER,PPER","PEER");
-	map.put("PIRE","PIRE");
-	map.put("PNMNH","PNMNH");
-	map.put("TIM","TIMOR");
+		// For INDO dump, we want to map prefixes to funding sources... we use
+		// here a delimited string as the key value in a map and point to a single
+		// expedition value
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("ACEH\\_","ACEH");
+		map.put("AUS,FLA,FL_PF,INV-CRU,NMV,QMW,SBD,ULLZ,USNM,ZRC","AMANDA");
+		map.put("BALI,CPM,IBRC,LISM,SERIBU,SRB,WPSM","BALI");
+		map.put("SS","NOAA");
+		map.put("ACEHPEER\\_,PEER,PER,PPER","PEER");
+		map.put("PIRE","PIRE");
+		map.put("PNMNH","PNMNH");
+		map.put("TIM","TIMOR");
 
 
 
-    	for (Map.Entry<String, String> entry : map.entrySet()) {
-	    String prefixList = entry.getKey().toString();
-	    String expedition = entry.getValue().toString();
-	    d.dumpSpecimens(projectCode, prefixList, expedition);
-	    d.dumpCollectingEvents(projectCode,prefixList, expedition);
-	    d.dumpTissues(projectCode, prefixList, expedition);
-        }
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			String prefixList = entry.getKey().toString();
+			String expedition = entry.getValue().toString();
+			d.dumpSpecimens(projectCode, prefixList, expedition);
+			d.dumpCollectingEvents(projectCode,prefixList, expedition);
+			d.dumpTissues(projectCode, prefixList, expedition);
+		}
 
-        // Dump EML
-        /*String emlFileString = outputDirectory + File.separatorChar + "eml.xml";
-        PrintWriter eml = new PrintWriter(emlFileString);
-        eml.println(getEml());
-        eml.close();
-        */
+		// Dump EML
+		/*String emlFileString = outputDirectory + File.separatorChar + "eml.xml";
+		  PrintWriter eml = new PrintWriter(emlFileString);
+		  eml.println(getEml());
+		  eml.close();
+		  */
 
-    }
+	}
 
-    public static File zip(List<File> files, String filename) {
-        File zipfile = new File(filename);
-        // Create a buffer for reading the files
-        byte[] buf = new byte[1024];
-        try {
-            // create the ZIP file
-            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipfile));
-            // compress the files
-            for (int i = 0; i < files.size(); i++) {
-                FileInputStream in = new FileInputStream(files.get(i).getCanonicalPath());
-                // add ZIP entry to output stream
-                out.putNextEntry(new ZipEntry(files.get(i).getName()));
-                // transfer bytes from the file to the ZIP file
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-                // complete the entry
-                out.closeEntry();
-                in.close();
-            }
-            // complete the ZIP file
-            out.close();
-            return zipfile;
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
-        return null;
-    }
+	public static File zip(List<File> files, String filename) {
+		File zipfile = new File(filename);
+		// Create a buffer for reading the files
+		byte[] buf = new byte[1024];
+		try {
+			// create the ZIP file
+			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipfile));
+			// compress the files
+			for (int i = 0; i < files.size(); i++) {
+				FileInputStream in = new FileInputStream(files.get(i).getCanonicalPath());
+				// add ZIP entry to output stream
+				out.putNextEntry(new ZipEntry(files.get(i).getName()));
+				// transfer bytes from the file to the ZIP file
+				int len;
+				while ((len = in.read(buf)) > 0) {
+					out.write(buf, 0, len);
+				}
+				// complete the entry
+				out.closeEntry();
+				in.close();
+			}
+			// complete the ZIP file
+			out.close();
+			return zipfile;
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
+		}
+		return null;
+	}
 
 }

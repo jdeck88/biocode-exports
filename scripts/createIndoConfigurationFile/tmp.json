@@ -1670,10 +1670,6 @@
 {"uri":"urn:subSubProject", "group":"Record and Owner Details","column":"subSubProject","dataType":"STRING","definedBy":"urn:subSubProject","definition":"A designation of a child project to the subProject"},
 {"uri":"urn:voucherURI", "group":"Record and Owner Details","column":"voucherURI","dataType":"STRING","definedBy":"urn:voucherURI","definition":"Voucher URI used for the specimen (assigned by host institution)"},
 {"uri":"urn:voucherCatalogNumber", "group":"Record and Owner Details","column":"voucherCatalogNumber","dataType":"STRING","definedBy":"urn:voucherCatalogNumber","definition":"Voucher catalog number used for the specimen (assigned by host institution)"},
-{"uri":"urn:associatedSequences", "group":"Record and Owner Details","column":"","dataType":"STRING","definedBy":"http://rs.tdwg.org/dwc/terms/associatedSequences","definition":""},
-
-
-
 {"uri":"urn:associatedTaxa", "group":"Taxonomy and Life History","column":"associatedTaxa","dataType":"STRING","definedBy":"http://rs.tdwg.org/dwc/terms/associatedTaxa","definition":"A list (concatenated and separated) of identifiers or names of taxa and their associations with the Occurrence."},
 {"uri":"urn:organismRemarks", "group":"Taxonomy and Life History","column":"organismRemarks","dataType":"STRING","definedBy":"http://rs.tdwg.org/dwc/terms/organismRemarks","definition":"Comments or notes about the Organism instance."},
 {"uri":"urn:basisOfIdentification", "group":"Taxonomy and Life History","column":"identificationRemarks","dataType":"STRING","definedBy":"http://rs.tdwg.org/dwc/terms/identificationRemarks","definition":"Comments or notes about the Identification."},
