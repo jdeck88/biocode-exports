@@ -28,4 +28,20 @@ The following example exports Biocode Project data to GeOMe:
 /usr/bin/java -cp /home/jdeck/code/biocode-exports/lib/*:/home/jdeck/code/biocode-exports/:/home/jdeck/code/biocode-exports/out/production/biocode-exports exports.exportForGeome -o /data/ipt/data/resources/biocode/geome/indo -p INDO
 ```
 
+# Loading Biocode data into GeOME steps
+```
+# Build the configuration file.  This step assembles files to create the JSON configuration file
+# USE EXTREME CAUTION HERE!!!
+# Only use on initial load or in development environment
+scripts/createIndoConfigurationFile/put.sh
 
+# Modify Java code for export data
+ant build
+
+#Generate Data
+./exportForGeome.sh
+
+# Load Data
+python ../geome-db/scripts/biocodeLoader.py --help
+python ../geome-db/scripts/biocodeLoader.py 34 ACCESS_TOKEN output/geome/indo/
+```

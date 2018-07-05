@@ -830,6 +830,24 @@
 		"fields": [{
 			"value": "larva"
 		}, {
+			"value": "egg"
+		}, {
+			"value": "gametophyte"
+		}, {
+			"value": "immature"
+		}, {
+			"value": "larva"
+		}, {
+			"value": "naiad"
+		}, {
+			"value": "nymph"
+		}, {
+			"value": "penultimate"
+		}, {
+			"value": "sporophyte"
+		}, {
+			"value": "subadult"
+		}, {
 			"value": "juvenile"
 		}, {
 			"value": "adult"
@@ -1633,7 +1651,6 @@
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "lengthUnits", "listName": "lengthUnits" }, 
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "weightUnits", "listName": "weightUnits" },
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "taxonRank", "listName": "taxonRank" }, 
-			{"name": "ControlledVocabulary", "level": "ERROR", "column": "identificationRemarks", "listName": "basisOfIdentification" }, 
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "sexCaste", "listName": "sex" }, 
 			{"name": "ControlledVocabulary", "level": "WARNING", "column": "lifeStage", "listName": "lifeStage" }, 
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "phylum", "listName": "phylum" }, 
@@ -1722,13 +1739,13 @@
 			{"name": "UniqueValue", "level": "ERROR", "column": "eventID" }, 
 			{"name": "ValidForURI", "level": "ERROR", "column": "eventID" }, 
 			{"name": "RequiredValue", "level": "ERROR", "columns": ["eventID", "enteredBy", "country", "taxTeam"] }, 
-			{"name": "MinMaxNumber", "level": "ERROR", "maximumColumn": "maximumDepthInMeters", "minimumColumn": "minimumDepthInMeters" }, 
-			{"name": "MinMaxNumber", "level": "ERROR", "maximumColumn": "maximumElevationInMeters", "minimumColumn": "minimumElevationInMeters" }, 
+			{"name": "MinMaxNumber", "level": "WARNING", "maximumColumn": "maximumDepthInMeters", "minimumColumn": "minimumDepthInMeters" }, 
+			{"name": "MinMaxNumber", "level": "WARNING", "maximumColumn": "maximumElevationInMeters", "minimumColumn": "minimumElevationInMeters" }, 
 			{"name": "RequireValueIfOtherColumn", "level": "ERROR", "column": "decimalLatitude", "otherColumn": "decimalLongitude" }, 
 			{"name": "RequireValueIfOtherColumn", "level": "ERROR", "column": "decimalLongitude", "otherColumn": "decimalLatitude" },
 			{"name": "RequiredValueInGroup", "level": "ERROR", "columns": ["locality", "decimalLatitude", "decimalLongitude"] },
 
-			{"name": "ControlledVocabulary", "level": "ERROR", "column": "habitat", "listName": "habitat" },
+			{"name": "ControlledVocabulary", "level": "WARNING", "column": "habitat", "listName": "habitat" },
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "country", "listName": "country" },
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "horizontalDatum", "listName": "horizontalDatum" },
 			{"name": "ControlledVocabulary", "level": "ERROR", "column": "taxTeam", "listName": "taxTeam" },

@@ -58,4 +58,4 @@ fi
 
 echo "Putting JSON to server...."
 # put this which validates
-curl -X PUT -H 'Content-Type: application/json' --data "@/home/jdeck/code/biocode-exports/scripts/createIndoConfigurationFile/indo.json" https://api.develop.geome-db.org/projects/34/config?access_token=v-RjBWBnwpUZ2D8TvfE4
+curl -X PUT -H 'Content-Type: application/json' --data "@/home/jdeck/code/biocode-exports/scripts/createIndoConfigurationFile/indo.json" https://api.develop.geome-db.org/projects/34/config?access_token=7D7cFvWm5nHHtWPHaqvq
