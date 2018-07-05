@@ -830,6 +830,24 @@
 		"fields": [{
 			"value": "larva"
 		}, {
+			"value": "egg"
+		}, {
+			"value": "gametophyte"
+		}, {
+			"value": "immature"
+		}, {
+			"value": "larva"
+		}, {
+			"value": "naiad"
+		}, {
+			"value": "nymph"
+		}, {
+			"value": "penultimate"
+		}, {
+			"value": "sporophyte"
+		}, {
+			"value": "subadult"
+		}, {
 			"value": "juvenile"
 		}, {
 			"value": "adult"
