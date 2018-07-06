@@ -1,4 +1,4 @@
 #!/bin/bash
-/usr/bin/java -cp /home/jdeck/code/biocode-exports/lib/*:/home/jdeck/code/biocode-exports/:/home/jdeck/code/biocode-exports/out/production/biocode-exports exports.exportIndoForGeome -o /home/jdeck/code/biocode-exports/output/geome/indo -p INDO
+/usr/bin/java -cp $HOME/code/biocode-exports/lib/*:$HOME/code/biocode-exports/:$HOME/code/biocode-exports/out/production/biocode-exports exports.exportIndoForGeome -o $HOME/code/biocode-exports/output/geome/indo -p INDO
 
 
