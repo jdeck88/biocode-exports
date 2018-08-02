@@ -1,0 +1,156 @@
+# a complete list of psql statements to recreate the INDO group of projects
+# the following projects will be created:
+#ACEH  AMANDA  BALI  NOAA  PEER  PIRE  PNMNH  SERIBU  TIMOR
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('ACEH', 'ACEH', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (36, 1);
+CREATE SCHEMA project_36;
+CREATE TABLE project_36.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_36 owner to biscicoldev;
+alter table project_36.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('AMANDA', 'AMANDA', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (37, 1);
+CREATE SCHEMA project_37;
+CREATE TABLE project_37.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_37 owner to biscicoldev;
+alter table project_37.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('BALI', 'BALI', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (38, 1);
+CREATE SCHEMA project_38;
+CREATE TABLE project_38.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_38 owner to biscicoldev;
+alter table project_38.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('NOAA', 'NOAA', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (39, 1);
+CREATE SCHEMA project_39;
+CREATE TABLE project_39.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_39 owner to biscicoldev;
+alter table project_39.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('PEER', 'PEER', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (40, 1);
+CREATE SCHEMA project_40;
+CREATE TABLE project_40.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_40 owner to biscicoldev;
+alter table project_40.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('PIRE', 'PIRE', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (41, 1);
+CREATE SCHEMA project_41;
+CREATE TABLE project_41.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_41 owner to biscicoldev;
+alter table project_41.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('PNMNH', 'PNMNH', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (42, 1);
+CREATE SCHEMA project_42;
+CREATE TABLE project_42.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_42 owner to biscicoldev;
+alter table project_42.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('SERIBU', 'SERIBU', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (43, 1);
+CREATE SCHEMA project_43;
+CREATE TABLE project_43.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_43 owner to biscicoldev;
+alter table project_43.audit_table owner to biscicoldev;
+
+insert into projects(project_code, project_title, config, user_id, public) VALUES ('TIMOR', 'TIMOR', '{}', 1, true);
+select max(id) from projects;
+insert into user_projects(project_id, user_id) VALUES (44, 1);
+CREATE SCHEMA project_44;
+CREATE TABLE project_44.audit_table
+  (
+    event_id bigserial primary key,
+    table_name text not null, -- table the change was made to
+    user_name text, -- user who made the change
+    ts TIMESTAMP WITH TIME ZONE NOT NULL, -- timestamp the change happened
+    action TEXT NOT NULL CHECK (action IN ('I','D','U', 'T')), -- INSERT, DELETE, UPDATE, or TRUNCATE
+    row_data jsonb, -- For INSERT this is the new row values. For DELETE and UPDATE it is the old row values.
+    changed_fields jsonb -- Null except UPDATE events. This is the result of jsonb_diff_val(NEW data, OLD data)
+  );
+alter schema project_44 owner to biscicoldev;
+alter table project_44.audit_table owner to biscicoldev;
