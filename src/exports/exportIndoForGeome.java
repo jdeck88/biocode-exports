@@ -58,7 +58,7 @@ public class exportIndoForGeome extends connector {
 	 *
 	 * @throws java.sql.SQLException
 	 */
-	public String dumpCollectingEvents(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
+	public String dumpCollectingEvents(String projectCode, String expedition) throws SQLException, IOException {
 		Statement stmt = conn.createStatement();
 		String sql =
 			"select \n" +
@@ -94,16 +94,20 @@ public class exportIndoForGeome extends connector {
 			"  e.YearCollected as yearCollected,\n" +
 			"  e.MonthCollected as monthCollected,\n" +
 			"  e.DayCollected as dayCollected\n" +
-			"FROM  biocode b, biocode_collecting_event e\n" +
+			"FROM  biocode b, biocode_collecting_event e, indo_join i\n" +
 			"where b.Coll_EventID = e.EventID\n" +
-			"AND e.projectCode = '" + projectCode + "'\n";
-		sql += queryPrefixList(prefixList);
-		sql += " group by eventID";
-		occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Collecting_Events.txt");
+			"AND i.event_id = e.Coll_eventid_collector\n" +
+			"AND i.project = '" + projectCode + "'\n" +
+			"AND i.expedition = '" + expedition + "'\n"; 
+		//sql += queryPrefixList(prefixList);
+		sql += " group by character_sanitizer(e.Coll_EventID_collector)";
+		occurrenceDataFile = new File(tmpDirName + File.separatorChar + projectCode + File.separatorChar + expedition+ "_Collecting_Events.txt");
+		occurrenceDataFile.getParentFile().mkdirs();
 		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
 	}
 
 	/*
+	    DEPRECATED
 	   A function that gets called a few times here to assemble the prefixList query
 	   this is a very INDO-specific function 
 	   */
@@ -121,7 +125,7 @@ public class exportIndoForGeome extends connector {
 		return sql;
 	}
 
-	public String dumpTissues(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
+	public String dumpTissues(String projectCode,String expedition) throws SQLException, IOException {
 		Statement stmt = conn.createStatement();
 		String sql =
 			"select \n" +
@@ -143,17 +147,20 @@ public class exportIndoForGeome extends connector {
 			" t.molecular_id as associatedSequences,\n" +
 			" t.notes as tissueRemarks,\n" +
 			" t.from_tissue as fromTissue\n" +
-			"FROM biocode b, biocode_collecting_event e, biocode_tissue t\n" +
+			"FROM biocode b, biocode_collecting_event e, biocode_tissue t, indo_join i\n" +
 			"where b.Coll_EventID = e.EventID\n" +
 			"AND b.bnhm_id=t.bnhm_id\n" + 
-			"AND b.projectCode = '" + projectCode + "'\n";
-		sql += queryPrefixList(prefixList);
+			"AND i.event_id = e.Coll_eventid_collector\n" +
+			"AND i.project = '" + projectCode + "'\n" +
+			"AND i.expedition = '" + expedition + "'\n"; 
+		//sql += queryPrefixList(prefixList);
 
-		occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Tissues.txt");
+		occurrenceDataFile = new File(tmpDirName + File.separatorChar + projectCode + File.separatorChar + expedition + "_Tissues.txt");
+		occurrenceDataFile.getParentFile().mkdirs();
 		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
 	}
 
-	public String dumpSpecimens(String projectCode, String prefixList, String expedition) throws SQLException, IOException {
+	public String dumpSpecimens(String projectCode, String expedition) throws SQLException, IOException {
 		Statement stmt = conn.createStatement();
 		String sql =
 			"select \n" +
@@ -192,7 +199,7 @@ public class exportIndoForGeome extends connector {
 			" b.Infraorder as infraOrder,\n" +
 			" b.Kingdom as kingdom,\n" +
 			" b.LifeStage as lifeStage,\n" +
-			" b.LowestTaxonLevel as taxonRank,\n" +
+			" replace(b.LowestTaxonLevel,'ordr','order') as taxonRank,\n" +
 			" b.MorphoSpecies_Description as morphospeciesDescription,\n" +
 			" b.MorphoSpecies_Match as morphospeciesMatch,\n" +
 			" b.Ordr as `order`,\n" +
@@ -216,12 +223,16 @@ public class exportIndoForGeome extends connector {
 			" b.YearIdentified as yearIdentified,\n" +
 			" b.MonthIdentified as monthIdentified,\n" +
 			" b.DayIdentified as dayIdentified\n" +
-			"FROM biocode b, biocode_collecting_event e \n" +
-			"where b.Coll_EventID = e.EventID \n" +
-			"AND b.projectCode = '" + projectCode + "'\n";
-		sql += queryPrefixList(prefixList);
+			"FROM biocode b, biocode_collecting_event e,indo_join i \n" +
+			"WHERE b.Coll_EventID = e.EventID \n" +
+			"AND i.event_id = e.Coll_eventid_collector\n" +
+			"AND i.project = '" + projectCode + "'\n" +
+			"AND i.expedition = '" + expedition + "'\n"; 
+		//sql += queryPrefixList(prefixList);
+		sql += "GROUP BY character_sanitizer(b.Specimen_Num_Collector),b.projectCode";
 
-		occurrenceDataFile = new File(tmpDirName + File.separatorChar + expedition + "_Specimens.txt");
+		occurrenceDataFile = new File(tmpDirName + File.separatorChar + projectCode +File.separatorChar + expedition + "_Specimens.txt");
+		occurrenceDataFile.getParentFile().mkdirs();
 		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
 	}
 
@@ -273,36 +284,52 @@ public class exportIndoForGeome extends connector {
 		exportIndoForGeome d = new exportIndoForGeome(outputDirectory);
 
 
-		// For INDO dump, we want to map prefixes to funding sources... we use
-		// here a delimited string as the key value in a map and point to a single
-		// expedition value
-		Map<String, String> map = new HashMap<String,String>();
-		map.put("ACEH\\_","ACEH");
-		map.put("AUS,FLA,FL_PF,INV-CRU,NMV,QMW,SBD,ULLZ,USNM,ZRC","AMANDA");
-		map.put("BALI,CPM,IBRC,LISM,SERIBU,SRB,WPSM","BALI");
-		map.put("SS","NOAA");
-		map.put("ACEHPEER\\_,PEER,PER,PPER","PEER");
-		map.put("PIRE","PIRE");
-		map.put("PNMNH","PNMNH");
-		map.put("TIM","TIMOR");
+// Chris meyer sends me a 3 column list of coll_eventid_collector,project,expedition which i load into 
+// indo_join.  i then call the following list of project names and expeditions for each.
+d.run(d,"ACEH","ACEH_2012");
+d.run(d,"AMANDA","WINDSOR_MUSEUMS");
+d.run(d,"BALI","BALI_2010");
+d.run(d,"BALI","BALI_2011_LEMBONGAN");
+d.run(d,"BALI","BALI_2011_MCKEON");
+d.run(d,"BALI","BALI_2011_PEMUTERAN");
+d.run(d,"BALI","BALI_2012_PEMUTERAN");
+d.run(d,"BALI","BALI_2013_PEMUTERAN");
+d.run(d,"BALI","LIMPETS_DITA");
+d.run(d,"BALI","RAJA_AMPAT_2011_MCKEON");
+d.run(d,"NOAA","MARIANAS_2017_NOAA");
+d.run(d,"PEER","ACEH_2016_PEER");
+d.run(d,"PEER","BALI_2016_PEER");
+d.run(d,"PEER","BONTONG_2017_PEER");
+d.run(d,"PEER","BUNAKEN_2017_PEER");
+d.run(d,"PEER","KARIMUNJAWA_2017_PEER");
+d.run(d,"PEER","LOMBOK_2017_PEER");
+d.run(d,"PEER","RAJA_AMPAT_2016_PEER");
+d.run(d,"PEER","SOLOR_2017_PEER");
+d.run(d,"PEER","SPREMONDE_2017_PEER");
+d.run(d,"PEER","UNKNOWN_PEER");
+d.run(d,"PIRE","ACEH_2016_PIRE");
+d.run(d,"PIRE","BALI_2016_PIRE");
+d.run(d,"PIRE","CENDERWASIH_2016_PIRE");
+d.run(d,"PIRE","RAJA_AMPAT_2016_PEER");
+d.run(d,"PIRE","RAJA_AMPAT_2016_PIRE");
+d.run(d,"PIRE","SERIBU_2016_PIRE");
+d.run(d,"PIRE","UNKNOWN_2016");
+d.run(d,"PNMNH","ANILAO_2015");
+d.run(d,"SERIBU","SERIBU_2012_DEADHEADS");
+d.run(d,"SERIBU","SERIBU_2014");
+d.run(d,"TIMOR","TIMOR_2014");
 
+	}
 
-
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			String prefixList = entry.getKey().toString();
-			String expedition = entry.getValue().toString();
-			d.dumpSpecimens(projectCode, prefixList, expedition);
-			d.dumpCollectingEvents(projectCode,prefixList, expedition);
-			d.dumpTissues(projectCode, prefixList, expedition);
-		}
-
-		// Dump EML
-		/*String emlFileString = outputDirectory + File.separatorChar + "eml.xml";
-		  PrintWriter eml = new PrintWriter(emlFileString);
-		  eml.println(getEml());
-		  eml.close();
-		  */
-
+	// run each of the methods
+	public void run(exportIndoForGeome d,String projectCode, String expedition) {
+	    try {
+			d.dumpSpecimens(projectCode, expedition);
+			d.dumpCollectingEvents(projectCode, expedition);
+			d.dumpTissues(projectCode, expedition);
+	    } catch(Exception e) {
+		System.err.println(e);
+	    }
 	}
 
 	public static File zip(List<File> files, String filename) {

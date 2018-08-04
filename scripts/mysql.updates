@@ -1,0 +1,13 @@
+# mysql script updates....
+update biocode set lowesttaxonlevel = 'genus' where lowesttaxonlevel = 'Genus';
+update biocode set lowesttaxonlevel = 'family' where lowesttaxonlevel = 'Family';
+update biocode set lowesttaxonlevel = 'class' where lowesttaxonlevel = 'Class';
+update biocode set lowesttaxonlevel = 'ordr' where lowesttaxonlevel = 'Ordr';
+update biocode set lowesttaxonlevel = 'phylum' where lowesttaxonlevel = 'Phylum';
+update biocode set lowesttaxonlevel = 'superFamily' where lowesttaxonlevel = 'Superfamily';
+update biocode set lowesttaxonlevel = 'subClass' where lowesttaxonlevel = 'Subclass';
+update biocode set lowesttaxonlevel = 'subClass' where lowesttaxonlevel = 'Subclass';
+update biocode set lowesttaxonlevel = 'subFamily' where lowesttaxonlevel = 'Subfamily';
+update biocode set lowesttaxonlevel = 'kingdom' where lowesttaxonlevel = 'Kingdom';
+update biocode set lowesttaxonlevel = 'infraOrder' where lowesttaxonlevel = 'Infraorder';
+update biocode set lowesttaxonlevel = 'specificEpithet' where lowesttaxonlevel = 'Genus_and_species';
