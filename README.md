@@ -40,11 +40,8 @@ Currently loadinged INDO projects:
 
 # Creating configuration File
 ```
-cd scripts/createIndoExports/
-curl https://api.develop.geome-db.org/projects/1/config > template.json.gz
-gunzip template.json.gz
-# run the following script to loop through projects and load
-./put.sh
+cd ../geome-configurator/bin
+# FOLLOW INSTRUCTIONS in the ../geome-configurator/README.md
 ```
 
 # Loading Biocode data into GeOME steps
@@ -61,8 +58,8 @@ ant build
 
 # Load Data
 python ../geome-db/scripts/biocodeLoader.py --help
-python ../geome-db/scripts/biocodeLoader.py 3 vtusJCR3yrypU-57Q4ZV output/geome/indo/ACEH
-python ../geome-db/scripts/biocodeLoader.py 4 vtusJCR3yrypU-57Q4ZV output/geome/indo/AMANDA
+python ../geome-db/scripts/biocodeLoader.py 3 W2wdMmeGvz6dPGhRdWg3 output/geome/indo/ACEH
+python ../geome-db/scripts/biocodeLoader.py 4 RkG54qJjRCHvawngVNqm output/geome/indo/AMANDA
 python ../geome-db/scripts/biocodeLoader.py 5 vtusJCR3yrypU-57Q4ZV output/geome/indo/BALI
 python ../geome-db/scripts/biocodeLoader.py 6 vtusJCR3yrypU-57Q4ZV output/geome/indo/NOAA
 python ../geome-db/scripts/biocodeLoader.py 7 vtusJCR3yrypU-57Q4ZV output/geome/indo/PEER
