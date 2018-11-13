@@ -129,8 +129,8 @@ public class exportIndoForGeome extends connector {
 		Statement stmt = conn.createStatement();
 		String sql =
 			"select \n" +
-			" character_sanitizer(concat(b.Specimen_Num_Collector,'.',tissue_num)) as tissueID,\n" +
-			" character_sanitizer(b.Specimen_Num_Collector) as specimenID,\n" +
+			" character_sanitizer(concat(b.bnhm_id,'.',tissue_num)) as tissueID,\n" +
+			" character_sanitizer(b.Specimen_Num_Collector) as materialSampleID,\n" +
 			" t.tissuetype as tissueType,\n" +
 			" t.format_name96 as tissuePlate,\n" +
 			" t.well_number96 as tissueWell,\n" +
@@ -164,7 +164,7 @@ public class exportIndoForGeome extends connector {
 		Statement stmt = conn.createStatement();
 		String sql =
 			"select \n" +
-			" character_sanitizer(b.Specimen_Num_Collector) as specimenID,\n" +
+			" character_sanitizer(b.Specimen_Num_Collector) as materialSampleID,\n" +
 			" character_sanitizer(e.Coll_EventID_collector) as eventID,\n" +
 			" b.Length as length,\n" +
 			" b.LengthUnits as lengthUnits,\n" +
@@ -205,7 +205,7 @@ public class exportIndoForGeome extends connector {
 			" b.Ordr as `order`,\n" +
 			" b.Phylum as phylum,\n" +
 			" b.PreviousID as previousIdentifications,\n" +
-			" b.ScientificName as scientificName,\n" +
+			" b.lowesttaxon_generated as scientificName,\n" +
 			" b.SexCaste as sexCaste,\n" +
 			" b.SpecificEpithet as specificEpithet,\n" +
 			" b.Subclass as subClass,\n" +
@@ -218,7 +218,7 @@ public class exportIndoForGeome extends connector {
 			" b.Superclass as superClass,\n" +
 			" b.Superfamily as superFamily,\n" +
 			" b.Superorder as superOrder,\n" +
-			" b.Taxon_Certainty as taxonCertainty,\n" +
+			" b.Taxon_Certainty as identificationVerificationStatus,\n" +
 			" b.Tribe as tribe,\n" +
 			" b.YearIdentified as yearIdentified,\n" +
 			" b.MonthIdentified as monthIdentified,\n" +
