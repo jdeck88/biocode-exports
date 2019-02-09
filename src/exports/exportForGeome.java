@@ -114,6 +114,7 @@ public class exportForGeome extends connector {
                         "AND b.bnhm_id=t.bnhm_id\n" + 
                         "AND b.projectCode = '" + projectCode + "';\n";
 
+
         occurrenceDataFile = new File(tmpDirName + File.separatorChar + "Tissues.txt");
         return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
     }
@@ -142,7 +143,6 @@ public class exportForGeome extends connector {
                         "  b.SexCaste as sex,\n" +
                         "  b.LifeStage as lifeStage,\n" +
                         "  b.bnhm_id as catalogNumber,\n" +
-
                         "  b.guid as guid\n" +
                         "FROM biocode b, biocode_collecting_event e\n" +
                         "where b.Coll_EventID = e.EventID\n" +

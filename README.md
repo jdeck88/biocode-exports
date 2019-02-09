@@ -28,21 +28,9 @@ The following example exports Biocode Project data to GeOMe:
 /usr/bin/java -cp /home/jdeck/code/biocode-exports/lib/*:/home/jdeck/code/biocode-exports/:/home/jdeck/code/biocode-exports/out/production/biocode-exports exports.exportForGeome -o /data/ipt/data/resources/biocode/geome/indo -p INDO
 ```
 
-# Creating projects
-```
-insert into projects(project_code, project_title, config, user_id, public) VALUES ('PROJECT_CODE', 'PROJECT_TITLE', '{}', 1, true);
-select max(id) from projects;
-insert into user_projects(project_id, user_id) VALUES (PROJECT_ID, 1);
-select create_project_schema(PROJECT_ID, 'biscicoldev')
-```
-Currently loadinged INDO projects:
-3.ACEH  4.AMANDA  5.BALI  6.NOAA  7.PEER  8.PIRE  9.PNMNH  10.SERIBU  11.TIMOR
-
-# Creating configuration File
-```
-cd ../geome-configurator/bin
-# FOLLOW INSTRUCTIONS in the ../geome-configurator/README.md
-```
+# Creating projects and configurations
+Configuration files are managed in the geome-configurator repository.
+See instructions, e.g. in ../geome-configurator/README.md
 
 # Loading Biocode data into GeOME steps
 ```
@@ -56,15 +44,15 @@ ant build
 #Generate Data
 ./exportForGeome.sh
 
-# Load Data
+# Load Biocode Data
 python ../geome-db/scripts/biocodeLoader.py --help
-python ../geome-db/scripts/biocodeLoader.py 3 W2wdMmeGvz6dPGhRdWg3 output/geome/indo/ACEH
-python ../geome-db/scripts/biocodeLoader.py 4 RkG54qJjRCHvawngVNqm output/geome/indo/AMANDA
-python ../geome-db/scripts/biocodeLoader.py 5 vtusJCR3yrypU-57Q4ZV output/geome/indo/BALI
-python ../geome-db/scripts/biocodeLoader.py 6 vtusJCR3yrypU-57Q4ZV output/geome/indo/NOAA
-python ../geome-db/scripts/biocodeLoader.py 7 vtusJCR3yrypU-57Q4ZV output/geome/indo/PEER
-python ../geome-db/scripts/biocodeLoader.py 8 vtusJCR3yrypU-57Q4ZV output/geome/indo/PIRE
-python ../geome-db/scripts/biocodeLoader.py 9 vtusJCR3yrypU-57Q4ZV output/geome/indo/PNMNH
-python ../geome-db/scripts/biocodeLoader.py 10 vtusJCR3yrypU-57Q4ZV output/geome/indo/SERIBU
-python ../geome-db/scripts/biocodeLoader.py 11 vtusJCR3yrypU-57Q4ZV output/geome/indo/TIMOR
-```
+python ../geome-db/scripts/biocodeLoader.py 3 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/ACEH --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 4 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/AMANDA --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 5 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/BALI --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 6 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/NOAA --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 7 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/PEER --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 8 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/PIRE --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 9 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/PNMNH --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 10 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/SERIBU --accept_warnings True
+python ../geome-db/scripts/biocodeLoader.py 11 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/TIMOR --accept_warnings True
+``` 
