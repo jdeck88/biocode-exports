@@ -52,7 +52,7 @@ public class exportAllBiocodeForGeome extends connector {
 			"  e.DecimalLatitude as decimalLatitude,\n" +
 			"  e.DecimalLongitude as decimalLongitude,\n" +
 			"  e.DepthOfBottomMeters as depthOfBottomInMeters,\n" +
-			"  e.EnteredBy as enteredBy,\n" +
+			"  ifnull(e.EnteredBy,'Unknown') as enteredBy,\n" +
 			"  e.Habitat as habitat,\n" +
 			"  e.HorizontalDatum  as horizontalDatum,\n" +
 			"  e.Island as island,\n" +
@@ -116,7 +116,7 @@ public class exportAllBiocodeForGeome extends connector {
 			" t.well_number96 as tissueWell,\n" +
 			" t.guid as tissueCatalogNumber,\n" +
 			" t.tissue_barcode as tissueBarcode,\n" +
-			" t.HoldingInstitution as tissueInstitution,\n" +
+			" ifnull(t.HoldingInstitution,'Unknown') as tissueInstitution,\n" +
 			" t.OtherCatalogNum as tissueOtherCatalogNumbers,\n" +
 			" t.year as tissueSamplingYear,\n" +
 			" t.month as tissueSamplingMonth,\n" +
@@ -150,13 +150,13 @@ public class exportAllBiocodeForGeome extends connector {
 			" b.Weight as weight,\n" +
 			" b.WeightUnits as weightUnits,\n" +
 			" b.fixative as fixative,\n" +
-			" b.HoldingInstitution as institutionCode,\n" +
+			" ifnull(b.HoldingInstitution,'Unknown') as institutionCode,\n" +
 			" b.IndividualCount as individualCount,\n" +
 			" b.PreparationType as preparationType,\n" +
 			" b.preservative as preservative,\n" +
 			" b.relaxant as relaxant,\n" +
 			" b.TypeStatus as typeStatus,\n" +
-			" b.EnteredBy as enteredBy,\n" +
+			" ifnull(b.EnteredBy,'Unknown') as enteredBy,\n" +
 			" b.guid as catalogNumber,\n" +
 			" b.ModifiedBy as modifiedBy,\n" +
 			" b.ModifyReason as modifiedReason,\n" +
