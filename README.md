@@ -30,7 +30,7 @@ The following example exports Biocode Project data to GeOMe:
 
 # Creating projects and configurations
 Configuration files are managed in the geome-configurator repository.
-See instructions, e.g. in ../geome-configurator/README.md
+See instructions in https://github.com/biocodellc/geome-configurations
 
 # Loading Biocode data into GeOME steps
 ```
@@ -44,7 +44,7 @@ ant build
 #Generate Data
 ./exportForGeome.sh
 
-# Load Biocode Data
+# Load Biocode Data Example
 python ../geome-db/scripts/biocodeLoader.py --help
 python ../geome-db/scripts/biocodeLoader.py 3 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/ACEH --accept_warnings True
 python ../geome-db/scripts/biocodeLoader.py 4 HNM9Gxg3Un4U7uD-tgnb output/geome/indo/AMANDA --accept_warnings True
