@@ -201,14 +201,34 @@ public class exportAllBiocodeForGeome extends connector {
 			" b.Tribe as tribe,\n" +
 			" b.YearIdentified as yearIdentified,\n" +
 			" b.MonthIdentified as monthIdentified,\n" +
-			" b.DayIdentified as dayIdentified\n" +
-			"FROM biocode b, biocode_collecting_event e \n" +
-			"WHERE b.Coll_EventID = e.EventID \n" +
+			" b.DayIdentified as dayIdentified,\n" +
+			//" character_sanitizer(concat(b.bnhm_id,'.',tissue_num)) as tissueID,\n" +
+			" concat(b.bnhm_id,'.',tissue_num) as tissueID,\n" +
+			" t.tissuetype as tissueType,\n" +
+			" t.format_name96 as tissuePlate,\n" +
+			" t.well_number96 as tissueWell,\n" +
+			" t.guid as tissueCatalogNumber,\n" +
+			" t.tissue_barcode as tissueBarcode,\n" +
+			" ifnull(t.HoldingInstitution,'Unknown') as tissueInstitution,\n" +
+			" t.OtherCatalogNum as tissueOtherCatalogNumbers,\n" +
+			" t.year as tissueSamplingYear,\n" +
+			" t.month as tissueSamplingMonth,\n" +
+			" t.day as tissueSamplingDay,\n" +
+			" t.person_subsampling as tissueRecordedBy,\n" +
+			" t.container as tissueContainer,\n" +
+			" t.preservative as tissuePreservative,\n" +
+			" t.molecular_id as associatedSequences,\n" +
+			" t.notes as tissueRemarks,\n" +
+			" t.from_tissue as fromTissue\n" +
+			"FROM biocode b \n" +
+			//"FROM biocode b, biocode_collecting_event e, biocode_tissue t \n" +
+			//"WHERE b.Coll_EventID = e.EventID \n" +
+			"LEFT JOIN biocode_tissue t on  b.bnhm_id = t.bnhm_id\n" +
+			"JOIN biocode_collecting_event e on b.coll_eventid = e.eventid\n" +
 			"AND b.geome_project = '" + projectCode + "'\n" +
 			"AND b.geome_expedition = '" + expedition + "'\n"; 
 		//sql += queryPrefixList(prefixList);
-		sql += "GROUP BY character_sanitizer(b.Specimen_Num_Collector),b.geome_project";
-
+		sql += "GROUP BY character_sanitizer(b.Specimen_Num_Collector),b.geome_project,b.geome_expedition";
 		occurrenceDataFile = new File(tmpDirName + File.separatorChar + projectCode +File.separatorChar + expedition + "_Specimens.txt");
 		occurrenceDataFile.getParentFile().mkdirs();
 		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
@@ -273,7 +293,7 @@ public class exportAllBiocodeForGeome extends connector {
 	    try {
 			d.dumpSpecimens(projectCode, expeditionCode);
 			d.dumpCollectingEvents(projectCode, expeditionCode);
-			d.dumpTissues(projectCode, expeditionCode);
+			//d.dumpTissues(projectCode, expeditionCode);
 	    } catch(Exception e) {
 		System.err.println(e);
 	    }
