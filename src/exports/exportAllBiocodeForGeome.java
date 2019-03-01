@@ -51,7 +51,7 @@ public class exportAllBiocodeForGeome extends connector {
 			"  e.County as county,\n" +
 			"  e.DecimalLatitude as decimalLatitude,\n" +
 			"  e.DecimalLongitude as decimalLongitude,\n" +
-			"  e.DepthOfBottomMeters as depthOfBottomInMeters,\n" +
+			"  cast(e.DepthOfBottomMeters as unsigned integer) as depthOfBottomInMeters,\n" +
 			"  ifnull(e.EnteredBy,'Unknown') as enteredBy,\n" +
 			"  e.Habitat as habitat,\n" +
 			"  e.HorizontalDatum  as horizontalDatum,\n" +
@@ -209,7 +209,7 @@ public class exportAllBiocodeForGeome extends connector {
 			" t.well_number96 as tissueWell,\n" +
 			" t.guid as tissueCatalogNumber,\n" +
 			" t.tissue_barcode as tissueBarcode,\n" +
-			" ifnull(t.HoldingInstitution,'Unknown') as tissueInstitution,\n" +
+			" t.HoldingInstitution as tissueInstitution,\n" +
 			" t.OtherCatalogNum as tissueOtherCatalogNumbers,\n" +
 			" t.year as tissueSamplingYear,\n" +
 			" t.month as tissueSamplingMonth,\n" +
@@ -228,7 +228,7 @@ public class exportAllBiocodeForGeome extends connector {
 			"AND b.geome_project = '" + projectCode + "'\n" +
 			"AND b.geome_expedition = '" + expedition + "'\n"; 
 		//sql += queryPrefixList(prefixList);
-		sql += "GROUP BY character_sanitizer(b.Specimen_Num_Collector),b.geome_project,b.geome_expedition";
+		//sql += "GROUP BY character_sanitizer(b.Specimen_Num_Collector),b.geome_project,b.geome_expedition";
 		occurrenceDataFile = new File(tmpDirName + File.separatorChar + projectCode +File.separatorChar + expedition + "_Specimens.txt");
 		occurrenceDataFile.getParentFile().mkdirs();
 		return writeResultSet(stmt.executeQuery(sql), occurrenceDataFile);
