@@ -1,2 +1,57 @@
-export ACCESS_TOKEN=DfuhBkhQ-M6ZgmbCvHC8
-python ../geome-db/scripts/biocodeLoader.py 69 $ACCESS_TOKEN "output/geome/allbiocode/MOOREA BIOCODE" --accept_warnings True
+#!/bin/bash
+export ACCESS_TOKEN=YNyfjZxBXadc7rZqBz3e
+
+declare -A BIOCODEMAP
+# Production Server Sites
+#BIOCODEMAP[67]="Cairns LAB"
+#BIOCODEMAP[68]="CMPI"
+#BIOCODEMAP[69]="Harasewych LAB"
+#BIOCODEMAP[70]="INDIAN RIVER LAGOON"
+#BIOCODEMAP[71]="Lemaitre LAB"
+#BIOCODEMAP[72]="MEYER ARMS"
+BIOCODEMAP[73]="MEYER BIOCUBE"
+#BIOCODEMAP[74]="MEYER LAB"
+##BIOCODEMAP[75]="MOOREA BIOCODE"
+#BIOCODEMAP[76]="Norenburg LAB"
+#BIOCODEMAP[77]="Osborn LAB"
+#BIOCODEMAP[78]="PEER DEADHEADS"
+#BIOCODEMAP[79]="Phillips LAB"
+#BIOCODEMAP[80]="PIRE ARMS"
+#BIOCODEMAP[81]="Strong LAB"
+#BIOCODEMAP[82]="USAID INDO"
+#BIOCODEMAP[83]="WINDSOR LAB"
+
+# Development Server Sites
+#BIOCODEMAP[70]="Cairns LAB"
+#BIOCODEMAP[71]="CMPI"
+#BIOCODEMAP[72]="Harasewych LAB"
+#BIOCODEMAP[73]="INDIAN RIVER LAGOON"
+#BIOCODEMAP[74]="Lemaitre LAB"
+#BIOCODEMAP[75]="MEYER ARMS"
+#BIOCODEMAP[76]="MEYER BIOCUBE"
+#BIOCODEMAP[77]="MEYER LAB"
+#BIOCODEMAP[69]="MOOREA BIOCODE"
+#BIOCODEMAP[78]="Norenburg LAB"
+#BIOCODEMAP[79]="Osborn LAB"
+#BIOCODEMAP[80]="PEER DEADHEADS"
+#BIOCODEMAP[81]="Phillips LAB"
+#BIOCODEMAP[82]="PIRE ARMS"
+#BIOCODEMAP[86]="Strong LAB"
+#BIOCODEMAP[87]="USAID INDO"
+#BIOCODEMAP[88]="WINDSOR LAB"
+
+## how to interact with other SI BARCODE DATA?
+#BIOCODEMAP[83]="SIBARCODE" 
+## how to interact with other SI BOEM data in dev/prod environments?
+#BIOCODEMAP[84]="SMITHSONIAN BOEM PROJECT"
+## how to interact with other SI BOEM data in dev/prod environments?
+#BIOCODEMAP[85]="SMITHSONIAN DROP PROJECT"
+
+for PROJECT_CODE in "${!BIOCODEMAP[@]}"
+do 
+    PROJECT_NAME=${BIOCODEMAP[$PROJECT_CODE]}
+    echo "******************************"
+    echo "Running $PROJECT_NAME ($PROJECT_CODE)"
+    echo "******************************"
+    python ../geome-db/scripts/biocodeLoader.py $PROJECT_CODE $ACCESS_TOKEN "output/geome/allbiocode/$PROJECT_NAME" --accept_warnings True
+done
